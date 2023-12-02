@@ -1,0 +1,43 @@
+const fs = require('fs')
+const NUMBERS = {
+  one: 1,
+  two: 2,
+  three: 3,
+  four: 4,
+  five: 5,
+  six: 6,
+  seven: 7,
+  eight: 8,
+  nine: 9,
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+  7: 7,
+  8: 8,
+  9: 9,
+}
+const calibrationValues = fs
+  .readFileSync('data/calibration_values.txt')
+  .toString()
+  .split('\n')
+
+function parseDigits(matcher) {
+  return calibrationValues
+    .map((cv) => {
+      const numbers = [...cv.matchAll(matcher)].map((n) => NUMBERS[n])
+
+      if (numbers.length === 0) return 0
+      if (numbers.length === 1) return parseInt(`${numbers[0]}${numbers[0]}`)
+      return parseInt(`${numbers[0]}${numbers[numbers.length - 1]}`)
+    })
+    .reduce((n, acc) => (acc += n))
+}
+
+const part1 = parseDigits(/\d/g)
+const part2 = parseDigits(/one|two|three|four|five|six|seven|eight|nine|\d/g)
+
+console.log(`Part 1 Answer: ${part1}`)
+console.log(`Part 2 Answer: ${part2}`)
