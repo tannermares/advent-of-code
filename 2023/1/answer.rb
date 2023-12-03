@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
 NUMBERS = {
   'one' => 1,
   'two' => 2,
@@ -23,7 +24,7 @@ NUMBERS = {
 }.freeze
 
 def parse_digits(matcher)
-  File.open(File.join(File.dirname(__FILE__), 'input.txt')).map do |calibration_value|
+  File.foreach(INPUT_PATH).sum do |calibration_value|
     numbers = calibration_value.scan(matcher).flatten.map { |n| NUMBERS[n] }
 
     if numbers.empty?
@@ -33,7 +34,7 @@ def parse_digits(matcher)
     else
       "#{numbers[0]}#{numbers[numbers.length - 1]}".to_i
     end
-  end.sum
+  end
 end
 
 part1 = parse_digits(/\d/)

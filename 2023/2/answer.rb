@@ -1,16 +1,15 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
 MAX_CUBES = {
   'blue' => 14,
   'green' => 13,
   'red' => 12
 }.freeze
-input = File.open(File.join(File.dirname(__FILE__), 'input.txt'))
 
-part1 = input.sum do |row|
+part1 = File.foreach(INPUT_PATH).sum do |row|
   title, game = row.split(':')
-
   game_id = title.split(' ')[1]
   sets = game.split(';')
 
@@ -26,10 +25,7 @@ part1 = input.sum do |row|
   invalid_game ? 0 : game_id.to_i
 end
 
-input.close
-input = File.open(File.join(File.dirname(__FILE__), 'input.txt'))
-
-part2 = input.sum do |row|
+part2 = File.foreach(INPUT_PATH).sum do |row|
   _title, game = row.split(':')
   sets = game.split(';')
   current_mins = {
