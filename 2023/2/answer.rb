@@ -2,11 +2,7 @@
 # frozen_string_literal: true
 
 INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
-MAX_CUBES = {
-  'blue' => 14,
-  'green' => 13,
-  'red' => 12
-}.freeze
+MAX_CUBES = { 'blue' => 14, 'green' => 13, 'red' => 12 }.freeze
 
 part1 = File.foreach(INPUT_PATH).sum do |row|
   title, game = row.split(':')
@@ -28,11 +24,7 @@ end
 part2 = File.foreach(INPUT_PATH).sum do |row|
   _title, game = row.split(':')
   sets = game.split(';')
-  game_mins = {
-    'blue' => 0,
-    'green' => 0,
-    'red' => 0
-  }
+  game_mins = { 'blue' => 0, 'green' => 0, 'red' => 0 }
 
   sets.each do |set|
     cubes = set.split(', ')
