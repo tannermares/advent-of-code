@@ -30,4 +30,8 @@ def part1
   end
 end
 
+def part2
+end
+
 puts "Part 1 Answer: #{part1}"
+puts "Part 2 Answer: #{part2}"
