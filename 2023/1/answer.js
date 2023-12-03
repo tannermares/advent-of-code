@@ -39,8 +39,25 @@ function parseDigits(matcher) {
     .reduce((n, acc) => (acc += n))
 }
 
-const part1 = parseDigits(/\d/g)
-const part2 = parseDigits(/one|two|three|four|five|six|seven|eight|nine|\d/g)
+function part1() {
+  const part1 = parseDigits(/\d/g)
+  const answer = `Part 1 Answer: ${part1}`
 
-console.log(`Part 1 Answer: ${part1}`)
-console.log(`Part 2 Answer: ${part2}`)
+  console.log(answer)
+
+  return `Part 1 Answer: ${part1}`
+}
+
+function part2() {
+  const part2 = parseDigits(/one|two|three|four|five|six|seven|eight|nine|\d/g)
+  const answer = `Part 2 Answer: ${part2}`
+
+  console.log(answer)
+
+  return `Part 2 Answer: ${part2}`
+}
+
+part1()
+part2()
+
+module.exports = { part1, part2 }
