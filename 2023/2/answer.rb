@@ -28,7 +28,7 @@ end
 part2 = File.foreach(INPUT_PATH).sum do |row|
   _title, game = row.split(':')
   sets = game.split(';')
-  current_mins = {
+  game_mins = {
     'blue' => 0,
     'green' => 0,
     'red' => 0
@@ -39,11 +39,11 @@ part2 = File.foreach(INPUT_PATH).sum do |row|
 
     cubes.each do |cube|
       pulled, color = cube.split(' ')
-      current_mins[color] = pulled.to_i if current_mins[color] <= pulled.to_i
+      game_mins[color] = pulled.to_i if game_mins[color] <= pulled.to_i
     end
   end
 
-  current_mins.values.reduce(:*)
+  game_mins.values.reduce(:*)
 end
 
 puts "Part 1 Answer: #{part1}"
