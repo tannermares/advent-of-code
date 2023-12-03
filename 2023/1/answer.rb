@@ -22,7 +22,7 @@ NUMBERS = {
 }.freeze
 
 def parse_digits(matcher)
-  numbers = File.open('data/calibration_values.txt').map do |cv|
+  numbers = File.open("#{File.dirname(__FILE__)}/input.txt").map do |cv|
     numbers = cv.scan(matcher).flatten.map { |n| NUMBERS[n] }
 
     if numbers.empty?

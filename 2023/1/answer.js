@@ -1,4 +1,9 @@
+const path = require('path')
 const fs = require('fs')
+const calibrationValues = fs
+  .readFileSync(path.resolve(__dirname, './input.txt'))
+  .toString()
+  .split('\n')
 const NUMBERS = {
   one: 1,
   two: 2,
@@ -19,10 +24,6 @@ const NUMBERS = {
   8: 8,
   9: 9,
 }
-const calibrationValues = fs
-  .readFileSync('data/calibration_values.txt')
-  .toString()
-  .split('\n')
 
 function parseDigits(matcher) {
   return calibrationValues
