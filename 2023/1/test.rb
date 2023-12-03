@@ -2,7 +2,7 @@ require 'test/unit'
 require 'stringio'
 require_relative 'answer'
 
-class Day1 < Test::Unit::TestCase
+class TestDay1 < Test::Unit::TestCase
   def test_part1
     original_stdout = $stdout
     $stdout = StringIO.new
