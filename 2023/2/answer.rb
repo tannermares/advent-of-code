@@ -5,7 +5,7 @@ INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
 MAX_CUBES = { 'blue' => 14, 'green' => 13, 'red' => 12 }.freeze
 
 def part1
-  part1 = File.foreach(INPUT_PATH).sum do |row|
+  File.foreach(INPUT_PATH).sum do |row|
     title, game = row.split(':')
     _, game_id = title.split(' ')
     sets = game.split(';')
@@ -21,12 +21,10 @@ def part1
 
     invalid_game ? 0 : game_id.to_i
   end
-
-  puts "Part 1 Answer: #{part1}"
 end
 
 def part2
-  part2 = File.foreach(INPUT_PATH).sum do |row|
+  File.foreach(INPUT_PATH).sum do |row|
     _title, game = row.split(':')
     sets = game.split(';')
     game_mins = { 'blue' => 0, 'green' => 0, 'red' => 0 }
@@ -42,9 +40,7 @@ def part2
 
     game_mins.values.reduce(:*)
   end
-
-  puts "Part 2 Answer: #{part2}"
 end
 
-part1
-part2
+puts "Part 1 Answer: #{part1}"
+puts "Part 2 Answer: #{part2}"

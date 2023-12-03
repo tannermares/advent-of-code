@@ -1,31 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'test/unit'
 require 'stringio'
 require_relative 'answer'
 
 class TestDay1 < Test::Unit::TestCase
   def test_part1
-    original_stdout = $stdout
-    $stdout = StringIO.new
-
-    part1
-
-    $stdout.rewind
-    output = $stdout.string
-    $stdout = original_stdout
-
-    assert_equal("Part 1 Answer: 53334\n", output)
+    assert_equal(53_334, part1)
   end
 
   def test_part2
-    original_stdout = $stdout
-    $stdout = StringIO.new
-
-    part2
-
-    $stdout.rewind
-    output = $stdout.string
-    $stdout = original_stdout
-
-    assert_equal("Part 2 Answer: 52834\n", output)
+    assert_equal(52_834, part2)
   end
 end
