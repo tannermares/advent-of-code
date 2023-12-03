@@ -37,8 +37,15 @@ def parse_digits(matcher)
   end
 end
 
-part1 = parse_digits(/\d/)
-part2 = parse_digits(/(?=(one|two|three|four|five|six|seven|eight|nine|\d))/)
+def part1
+  part1 = parse_digits(/\d/)
+  puts "Part 1 Answer: #{part1}"
+end
 
-puts "Part 1 Answer: #{part1}"
-puts "Part 2 Answer: #{part2}"
+def part2
+  part2 = parse_digits(/(?=(one|two|three|four|five|six|seven|eight|nine|\d))/)
+  puts "Part 2 Answer: #{part2}"
+end
+
+part1
+part2
