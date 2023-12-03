@@ -2,7 +2,7 @@
 
 const path = require('path')
 const fs = require('fs')
-const calibrationValues = fs
+const input = fs
   .readFileSync(path.resolve(__dirname, './input.txt'))
   .toString()
   .split('\n')
@@ -28,7 +28,7 @@ const NUMBERS = {
 }
 
 function parseDigits(matcher) {
-  return calibrationValues
+  return input
     .map((cv) => {
       const numbers = [...cv.matchAll(matcher)].map((n) => NUMBERS[n])
 
