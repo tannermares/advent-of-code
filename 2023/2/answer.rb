@@ -10,7 +10,7 @@ MAX_CUBES = {
 
 part1 = File.foreach(INPUT_PATH).sum do |row|
   title, game = row.split(':')
-  game_id = title.split(' ')[1]
+  _, game_id = title.split(' ')
   sets = game.split(';')
 
   invalid_game = sets.any? do |set|
