@@ -10,7 +10,7 @@ class TestDay3 < Test::Unit::TestCase
     assert_equal(532_331, part1)
   end
 
-  # def test_part2
-  #   assert_equal(nil, part2)
-  # end
+  def test_part2
+    assert_equal(82_301_120, part2)
+  end
 end

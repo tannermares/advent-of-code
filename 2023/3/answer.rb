@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-INPUT_PATH = File.join(File.dirname(__FILE__), 'sample.txt').freeze
+INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
 INPUT = File.readlines(INPUT_PATH)
 SYMBOL_REGEX = Regexp.new(/[^.\d\s]/)
 
@@ -30,24 +30,32 @@ def part1
   end
 end
 
+def find_numbers_in_row(gears, row, gear_index)
+  row.to_enum(:scan, /\d+/).each do
+    match = Regexp.last_match
+    start_offset = match.offset(0)[0]
+    end_offset = match.offset(0)[1]
+
+    gears << match.to_s.to_i if start_offset <= gear_index + 1 && end_offset - 1 >= gear_index - 1
+  end
+end
+
 def part2
-  INPUT.each_with_index.map do |row, index|
+  INPUT.each_with_index.sum do |row, index|
     gear_indexes = row.to_enum(:scan, /\*/).map { Regexp.last_match.offset(0)[0] }
 
     previous_row = index.zero? ? '' : INPUT[index - 1]
     next_row = INPUT[index + 1].nil? ? '' : INPUT[index + 1]
 
-    gear_indexes.map do |gi|
-      gear_buffer_start = gi.zero? ? 0 : gi - 1
-      gear_range = gear_buffer_start..(gi + 1)
+    gear_indexes.sum do |gi|
+      gears = []
 
-      previous_adjacent = previous_row[gear_range] || ''
-      current_adjacent = row[gear_range]
-      next_adjacent = next_row[gear_range] || ''
-      adjacent_gears = (previous_adjacent + current_adjacent + next_adjacent).scan(/\d+/)
+      find_numbers_in_row(gears, previous_row, gi)
+      find_numbers_in_row(gears, row, gi)
+      find_numbers_in_row(gears, next_row, gi)
 
-      if adjacent_gears.length > 1
-        adjacent_gears
+      if gears.length == 2
+        gears.reduce { |acc, n| acc * n }
       else
         0
       end
