@@ -36,7 +36,7 @@ def find_numbers_in_row(gears, row, gear_index)
     start_offset = match.offset(0)[0]
     end_offset = match.offset(0)[1]
 
-    gears << match.to_s.to_i if start_offset <= gear_index + 1 && end_offset - 1 >= gear_index - 1
+    gears << match.to_s.to_i if start_offset <= gear_index + 1 && end_offset >= gear_index
   end
 end
 
