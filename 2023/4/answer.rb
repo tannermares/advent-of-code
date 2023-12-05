@@ -21,9 +21,22 @@ def part1
 end
 
 def part2
-  INPUT.sum do |row|
-    0
+  cards = Array.new(INPUT.length).fill(0)
+
+  INPUT.each_with_index do |row, index|
+    _card_number, numbers = row.split(': ')
+    winning_numbers, my_numbers = numbers.split(' | ').map(&:split)
+    matches = (winning_numbers & my_numbers).length
+    cards[index] += 1
+
+    cards[index].times do
+      matches.times do |n|
+        cards[index + n + 1] += 1
+      end
+    end
   end
+
+  cards.sum
 end
 
 puts "Part 1 Answer: #{part1}"
