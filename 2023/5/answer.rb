@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-INPUT_PATH = File.join(File.dirname(__FILE__), 'sample.txt').freeze
+INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
 INPUT = File.readlines(INPUT_PATH)
 
 def part1
@@ -25,7 +25,7 @@ def part1
   seeds.map do |seed|
     location = maps.reduce(seed) do |acc, map|
       map[:sources].each_with_index do |source, index|
-        next unless acc >= source && acc < source + map[:lengths][index]
+        next unless (source..(source + map[:lengths][index])).include?(acc)
 
         acc += map[:destinations][index] - source and break
       end
@@ -55,16 +55,16 @@ def part2
   end
 
   locations = []
-  seeds.each_slice(2) do |seed, count|
-    locations << maps.reduce([seed, seed + count]) do |acc, map|
-      map[:sources].each_with_index do |source, index|
-        next unless acc[0] >= source && acc[0] < source + map[:lengths][index]
-
-        [acc[0] += map[:destinations][index] - source, acc[1] += map[:destinations][index] - source] and break
-      end
-      acc
-    end
-  end
+  # seeds.each_slice(2) do |seed, count|
+  #   seed_range = [seed, seed + count]
+  #   maps.each do |map|
+  #     map_value = seed
+  #     map[:sources].each_with_index do |source, index|
+  #       source_range = [source, source + map[:lengths][index]]
+  #       adjustment = map[:destinations][index] - source
+  #     end
+  #   end
+  # end
 
   locations.flatten.min
 end
