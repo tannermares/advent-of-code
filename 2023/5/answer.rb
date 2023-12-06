@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
+INPUT_PATH = File.join(File.dirname(__FILE__), 'sample.txt').freeze
 INPUT = File.readlines(INPUT_PATH)
 
 def part1
@@ -29,7 +29,6 @@ def part1
 
         acc += map[:destinations][index] - source and break
       end
-
       acc
     end
 
@@ -38,7 +37,37 @@ def part1
 end
 
 def part2
+  seeds = []
+  maps = []
+  current_map = -1
+
+  INPUT.each do |row|
+    seeds = row.split(': ').last.split.map(&:to_i) and next if row.include?('seeds')
+    current_map += 1 and next if row.include?('map:')
+    next if row == "\n"
+
+    dest, source, length = row.split
+
+    maps[current_map] ||= { destinations: [], lengths: [], sources: [] }
+    maps[current_map][:destinations] << dest.to_i
+    maps[current_map][:sources] << source.to_i
+    maps[current_map][:lengths] << length.to_i
+  end
+
+  locations = []
+  seeds.each_slice(2) do |seed, count|
+    locations << maps.reduce([seed, seed + count]) do |acc, map|
+      map[:sources].each_with_index do |source, index|
+        next unless acc[0] >= source && acc[0] < source + map[:lengths][index]
+
+        [acc[0] += map[:destinations][index] - source, acc[1] += map[:destinations][index] - source] and break
+      end
+      acc
+    end
+  end
+
+  locations.flatten.min
 end
 
 puts "Part 1 Answer: #{part1}"
-# puts "Part 2 Answer: #{part2}"
+puts "Part 2 Answer: #{part2}"
