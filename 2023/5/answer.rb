@@ -66,7 +66,7 @@ def part2
 end
 
 def adjust_range(adjustment, range)
-  return [range] if range[1] < adjustment[0] || range[0] > adjustment[1] || range[2]
+  return [range] if range[0] > adjustment[1] || range[1] < adjustment[0] || range[2]
 
   low = range[0]
   high = range[1]
@@ -84,11 +84,9 @@ def adjust_range(adjustment, range)
     high = range_start - 1
   end
 
-  if (adjustment[0]..adjustment[1]).cover?(low..high)
-    new_start = [low, adjustment[0]].max + adjustment[2]
-    new_end = [high, adjustment[1]].min + adjustment[2]
-    new_ranges << [new_start, new_end, true]
-  end
+  new_start = [low, adjustment[0]].max + adjustment[2]
+  new_end = [high, adjustment[1]].min + adjustment[2]
+  new_ranges << [new_start, new_end, true]
 
   new_ranges
 end
