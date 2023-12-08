@@ -67,7 +67,7 @@ end
 def type_hand_with_jokers(hand)
   # Sort Jokers to the bottom
   sorted_hand = hand.each_char.sort_by { |s| s =~ /^J$/ ? [2, Regexp.last_match[0]] : [1, s] }
-  number_of_jokers = sorted_hand.count { |a| a == 'J' }
+  number_of_jokers = sorted_hand.count('J')
 
   if sorted_hand[0] == sorted_hand[3] && number_of_jokers == 1 ||
      sorted_hand[0] == sorted_hand[2] && number_of_jokers == 2 ||
