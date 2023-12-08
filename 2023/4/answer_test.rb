@@ -5,7 +5,7 @@ require 'test/unit'
 require 'stringio'
 require_relative 'answer'
 
-class TestDay3 < Test::Unit::TestCase
+class TestDay4 < Test::Unit::TestCase
   def test_part1
     assert_equal(26_426, part1)
   end

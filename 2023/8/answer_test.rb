@@ -5,12 +5,12 @@ require 'test/unit'
 require 'stringio'
 require_relative 'answer'
 
-class TestDay5 < Test::Unit::TestCase
+class TestDay7 < Test::Unit::TestCase
   def test_part1
-    assert_equal(510_109_797, part1)
+    assert_equal(6, part1)
   end
 
-  def test_part2
-    assert_equal(9_622_622, part2)
-  end
+  # def test_part2
+  #   assert_equal(0, part2)
+  # end
 end
