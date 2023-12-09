@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-
+const SAMPLE = false
 const path = require('path')
 const fs = require('fs')
 const input = fs
-  .readFileSync(path.resolve(__dirname, 'input.txt'))
+  .readFileSync(path.resolve(__dirname, SAMPLE ? 'sample.txt' : 'input.txt'))
   .toString()
   .split('\n')
 
@@ -52,7 +52,4 @@ function part2() {
   return cards.reduce((acc, n) => (acc += n))
 }
 
-console.log(`Part 1 Answer: ${part1()}`)
-console.log(`Part 2 Answer: ${part2()}`)
-
-module.exports = { part1, part2 }
+module.exports = { part1, part2, SAMPLE }
