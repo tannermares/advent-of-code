@@ -15,12 +15,12 @@ test('buildSteps', (t) => {
   )
 })
 
-test('part 1', (t) => {
+test('part1', (t) => {
   SAMPLE
     ? assert.strictEqual(114, part1())
     : assert.strictEqual(2_043_677_056, part1())
 })
 
-test('part 2', (t) => {
+test('part2', (t) => {
   SAMPLE ? assert.strictEqual(2, part2()) : assert.strictEqual(1_062, part2())
 })

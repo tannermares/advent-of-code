@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const SAMPLE = false
 const path = require('path')
 const fs = require('fs')
