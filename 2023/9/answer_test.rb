@@ -11,6 +11,6 @@ class TestDay9 < Test::Unit::TestCase
   end
 
   def test_part2
-    SAMPLE ? assert_equal(2, part2) : assert_equal(0, part2)
+    SAMPLE ? assert_equal(2, part2) : assert_equal(1_062, part2)
   end
 end
