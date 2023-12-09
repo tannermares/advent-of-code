@@ -42,6 +42,3 @@ def part2
     game_mins.values.reduce(:*)
   end
 end
-
-puts "Part 1 Answer: #{part1}"
-puts "Part 2 Answer: #{part2}"

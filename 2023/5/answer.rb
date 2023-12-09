@@ -90,6 +90,3 @@ def adjust_range(adjustment, range)
 
   new_ranges
 end
-
-puts "Part 1 Answer: #{part1}"
-puts "Part 2 Answer: #{part2}"
