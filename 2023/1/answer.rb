@@ -101,8 +101,10 @@ end
 class Input
   attr_reader :file, :path_string
 
-  def initialize(path_string = 'input.txt')
-    @path_string = path_string
+  SAMPLE = false
+
+  def initialize
+    @path_string = SAMPLE ? 'sample.txt' : 'input.txt'
     @file = File.foreach(path)
   end
 
@@ -116,6 +118,3 @@ class Input
     File.join(File.dirname(__FILE__), path_string).freeze
   end
 end
-
-puts "Part 1 Answer: #{part1}"
-puts "Part 2 Answer: #{part2}"
