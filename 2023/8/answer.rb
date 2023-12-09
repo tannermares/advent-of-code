@@ -46,16 +46,21 @@ def part2
   end
 
   current_nodes = nodes.keys.filter { |node| node.end_with?('A') }
+  z_counts = []
 
   until current_nodes.all? { |node| node.end_with?('Z') }
     instructions.each_char.each do |inst|
       steps += 1
 
       current_nodes.each_with_index do |node, index|
-        current_nodes[index] = inst == 'L' ? nodes[node][0] : nodes[node][1]
+        next if node.end_with?('Z')
+
+        next_node = inst == 'L' ? nodes[node][0] : nodes[node][1]
+        z_counts << steps if next_node.end_with?('Z')
+        current_nodes[index] = next_node
       end
     end
   end
 
-  steps
+  z_counts.reduce(1, :lcm)
 end
