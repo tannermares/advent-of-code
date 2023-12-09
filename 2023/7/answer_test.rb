@@ -5,7 +5,7 @@ require 'test/unit'
 require 'stringio'
 require_relative 'answer'
 
-class TestDay3 < Test::Unit::TestCase
+class TestDay7 < Test::Unit::TestCase
   def test_type_hand
     # Five of a kind
     assert_equal(6, type_hand('AAAAA'))
@@ -73,12 +73,10 @@ class TestDay3 < Test::Unit::TestCase
   end
 
   def test_part1
-    assert_equal(250_898_830, part1) # Input
-    # assert_equal(6_440, part1) # Sample
+    SAMPLE ? assert_equal(6_440, part1) : assert_equal(250_898_830, part1)
   end
 
   def test_part2
-    assert_equal(252_127_335, part2) # Input
-    # assert_equal(5_905, part2) # Sample
+    SAMPLE ? assert_equal(5_905, part2) : assert_equal(252_127_335, part2)
   end
 end

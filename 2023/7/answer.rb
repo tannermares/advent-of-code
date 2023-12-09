@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
+SAMPLE = false
+INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
 INPUT = File.readlines(INPUT_PATH)
 
 NORMAL_RANKS = {
@@ -48,16 +49,16 @@ def type_hand(hand)
         sorted_hand[0] != sorted_hand[1] && sorted_hand[2] == sorted_hand[4] ||
         sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4]
     3
-  elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[03] != sorted_hand[4] || 
-        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] == sorted_hand[4] ||
-        sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] == sorted_hand[4]
+  elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4] || 
+        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] == sorted_hand[4] ||
+        sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] == sorted_hand[4]
     2
-  elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] != sorted_hand[4] || 
-        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] != sorted_hand[4] ||
-        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[03] != sorted_hand[4] ||
-        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] == sorted_hand[4]
+  elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4] || 
+        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4] ||
+        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4] ||
+        sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] == sorted_hand[4]
     1
-  elsif sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] != sorted_hand[4]
+  elsif sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4]
     0
   else
     raise "Invalid type for: #{sorted_hand}"
@@ -88,7 +89,7 @@ def type_hand_with_jokers(hand)
         sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && number_of_jokers == 1 ||
         sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && number_of_jokers == 2
     3
-  elsif sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[03] != sorted_hand[4] && number_of_jokers == 1
+  elsif sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4] && number_of_jokers == 1
     1
   else
     raise "Invalid type for: #{sorted_hand}"
@@ -141,6 +142,3 @@ def part2
   sorted_typed_with_scores = sort_hands(typed_with_scores, ranks: JOKER_RANKS)
   sum_ranks(sorted_typed_with_scores)
 end
-
-puts "Part 1 Answer: #{part1}"
-puts "Part 2 Answer: #{part2}"

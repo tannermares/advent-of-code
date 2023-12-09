@@ -36,7 +36,7 @@ function parseDigits(matcher) {
       if (numbers.length === 1) return parseInt(`${numbers[0]}${numbers[0]}`)
       return parseInt(`${numbers[0]}${numbers[numbers.length - 1]}`)
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 function part1() {

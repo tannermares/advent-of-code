@@ -44,9 +44,9 @@ function part1() {
             return 0
           }
         })
-        .reduce((n, acc) => (acc += n), 0)
+        .reduce((acc, n) => (acc += n), 0)
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 function findNumbersInRow(gears, row, gearIndex) {
@@ -77,14 +77,14 @@ function part2() {
           findNumbersInRow(gears, nextRow, gi)
 
           if (gears.length == 2) {
-            return gears.reduce((n, acc) => (acc *= n))
+            return gears.reduce((acc, n) => (acc *= n))
           } else {
             return 0
           }
         })
-        .reduce((n, acc) => (acc += n), 0)
+        .reduce((acc, n) => (acc += n), 0)
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 console.log(`Part 1 Answer: ${part1()}`)

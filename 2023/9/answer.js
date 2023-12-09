@@ -46,9 +46,9 @@ function part1() {
         }
       })
 
-      return answers.reduce((n, acc) => (acc += n))
+      return answers.reduce((acc, n) => (acc += n))
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 function part2() {
@@ -71,9 +71,9 @@ function part2() {
         }
       })
 
-      return answers.reduce((n, acc) => (acc += n))
+      return answers.reduce((acc, n) => (acc += n))
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 module.exports = { buildSteps, part1, part2, SAMPLE }

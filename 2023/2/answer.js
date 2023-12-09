@@ -27,7 +27,7 @@ function part1() {
 
       return invalidGame ? 0 : parseInt(gameId)
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 function part2() {
@@ -48,9 +48,9 @@ function part2() {
         })
       })
 
-      return Object.values(gameMins).reduce((n, acc) => (acc *= n))
+      return Object.values(gameMins).reduce((acc, n) => (acc *= n))
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 console.log(`Part 1 Answer: ${part1()}`)

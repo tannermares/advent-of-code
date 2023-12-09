@@ -26,7 +26,7 @@ function part1() {
         return 0
       }
     })
-    .reduce((n, acc) => (acc += n))
+    .reduce((acc, n) => (acc += n))
 }
 
 function part2() {
@@ -49,7 +49,7 @@ function part2() {
     })
   })
 
-  return cards.reduce((n, acc) => (acc += n))
+  return cards.reduce((acc, n) => (acc += n))
 }
 
 console.log(`Part 1 Answer: ${part1()}`)
