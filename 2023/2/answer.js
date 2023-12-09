@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
+const SAMPLE = true
 const path = require('path')
 const fs = require('fs')
 const input = fs
-  .readFileSync(path.resolve(__dirname, 'input.txt'))
+  .readFileSync(path.resolve(__dirname, SAMPLE ? 'sample.txt' : 'input.txt'))
   .toString()
   .split('\n')
 const maxCubes = { blue: 14, green: 13, red: 12 }
@@ -53,7 +54,4 @@ function part2() {
     .reduce((acc, n) => (acc += n))
 }
 
-console.log(`Part 1 Answer: ${part1()}`)
-console.log(`Part 2 Answer: ${part2()}`)
-
-module.exports = { part1, part2 }
+module.exports = { part1, part2, SAMPLE }
