@@ -33,6 +33,7 @@ def part2
   steps = 0
   nodes = {}
   instructions = nil
+  z_counts = []
   current_nodes = []
 
   INPUT.each_with_index do |row, index|
@@ -46,7 +47,6 @@ def part2
   end
 
   current_nodes = nodes.keys.filter { |node| node.end_with?('A') }
-  z_counts = []
 
   until current_nodes.all? { |node| node.end_with?('Z') }
     instructions.each_char.each do |inst|
