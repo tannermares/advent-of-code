@@ -8,3 +8,7 @@ I've added some specs to aid in the refactoring so I wouldn't have to actually c
 - [Day 2](https://github.com/tannermares/advent-of-code/tree/main/2023/2) ⭐️⭐️
 - [Day 3](https://github.com/tannermares/advent-of-code/tree/main/2023/3) ⭐️⭐️
 - [Day 4](https://github.com/tannermares/advent-of-code/tree/main/2023/4) ⭐️⭐️
+- [Day 5](https://github.com/tannermares/advent-of-code/tree/main/2023/5) ⭐️⭐️
+- [Day 6](https://github.com/tannermares/advent-of-code/tree/main/2023/6) ⭐️⭐️
+- [Day 7](https://github.com/tannermares/advent-of-code/tree/main/2023/7) ⭐️⭐️
+- [Day 8](https://github.com/tannermares/advent-of-code/tree/main/2023/8) ⭐️⭐️
