@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-INPUT_PATH = File.join(File.dirname(__FILE__), 'input.txt').freeze
+SAMPLE = false
+INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
 INPUT = File.readlines(INPUT_PATH)
 
 def part1
@@ -14,30 +15,27 @@ def part1
     current_map += 1 and next if row.include?('map:')
     next if row == "\n"
 
-    dest, source, length = row.split
+    dest, source, length = row.split.map(&:to_i)
 
     maps[current_map] ||= { destinations: [], lengths: [], sources: [] }
-    maps[current_map][:destinations] << dest.to_i
-    maps[current_map][:sources] << source.to_i
-    maps[current_map][:lengths] << length.to_i
+    maps[current_map][:destinations] << dest
+    maps[current_map][:sources] << source
+    maps[current_map][:lengths] << length
   end
 
   seeds.map do |seed|
-    location = maps.reduce(seed) do |acc, map|
+    maps.reduce(seed) do |acc, map|
       map[:sources].each_with_index do |source, index|
-        next unless (source..(source + map[:lengths][index])).include?(acc)
-
-        acc += map[:destinations][index] - source and break
+        acc += map[:destinations][index] - source and break if (source..(source + map[:lengths][index])).include?(acc)
       end
       acc
     end
-
-    location
   end.min
 end
 
 def part2
   seeds = []
+  ranges = []
   maps = []
   current_map = -1
 
@@ -51,18 +49,17 @@ def part2
     maps[current_map] << [source, source + length - 1, dest - source]
   end
 
-  ranges = []
   seeds.each_slice(2) { |seed, count| ranges << [seed, seed + count - 1] }
 
-  maps.reduce(ranges) do |acc, adjustments|
-    adjustments.reduce(acc) do |accu, adjustment|
-      accu.flat_map do |range|
-        adjust_range(adjustment, range)
-      end
-    end.each do |r|
-      r[2] = false
+  adjusted_flattened = maps.reduce(ranges) do |acc, adjustments|
+    flattened = adjustments.reduce(acc) do |accu, adjustment|
+      accu.flat_map { |range| adjust_range(adjustment, range) }
     end
-  end.map { |i| i[0] }.min
+
+    flattened.each { |r| r[2] = false }
+  end
+
+  adjusted_flattened.map { |i| i[0] }.min
 end
 
 def adjust_range(adjustment, range)
