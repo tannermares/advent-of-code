@@ -1,15 +1,19 @@
 #!/usr/bin/env node --test
 
-const test = require('node:test')
+const { describe, test } = require('node:test')
 const assert = require('assert')
-const { SAMPLE, part1, part2 } = require('./answer.js')
+const { part1, part2, SAMPLE } = require('./answer.js')
 
-test('part1', (t) => {
-  SAMPLE ? assert.strictEqual(2, part1()) : assert.strictEqual(13_301, part1())
-})
+describe('day8', () => {
+  test('part1', () => {
+    SAMPLE
+      ? assert.strictEqual(2, part1())
+      : assert.strictEqual(13_301, part1())
+  })
 
-test('part2', (t) => {
-  SAMPLE
-    ? assert.strictEqual(6, part2())
-    : assert.strictEqual(7_309_459_565_207, part2())
+  test('part2', () => {
+    SAMPLE
+      ? assert.strictEqual(6, part2())
+      : assert.strictEqual(7_309_459_565_207, part2())
+  })
 })
