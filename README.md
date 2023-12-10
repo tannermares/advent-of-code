@@ -1,6 +1,8 @@
 # advent-of-code
 My adventures in https://adventofcode.com
 
+![JS](https://github.com/tannermares/advent-of-code/actions/workflows/node.js.yml/badge.svg)
+
 ## Development
 I used `rerun` to make iterating really fast
 ```
