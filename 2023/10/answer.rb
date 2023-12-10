@@ -39,7 +39,7 @@ module Day10
     end
   end
 
-  def self.valid_moves_for(tile, position)
+  def self.valid_moves_for(tile, position, visited)
     valid_moves = {
       '|' => [[position[0] - 1, position[1]], [position[0] + 1, position[1]]],
       '-' => [[position[0], position[1] - 1], [position[0], position[1] + 1]],
@@ -48,8 +48,9 @@ module Day10
       'F' => [[position[0] + 1, position[1]], [position[0], position[1] + 1]],
       '7' => [[position[0] + 1, position[1]], [position[0], position[1] - 1]]
     }
-
-    valid_moves[tile]
+    next_moves = valid_moves[tile].reject { |m| visited.include?(m) }
+    visited.concat(next_moves)
+    next_moves
   end
 
   def self.part1
@@ -63,35 +64,40 @@ module Day10
     end
     visited << start
 
-    current_positions = valid_moves_for(type_start(start, map), start)
+    current_positions = valid_moves_for(type_start(start, map), start, visited)
     steps = 1
-    visited.concat(current_positions)
 
-    # puts "visited: #{visited.inspect}"
-    # puts "current positions: #{current_positions.inspect}"
-
-    until current_positions.uniq.length == 1
+    until current_positions.length == 1
       current_positions = current_positions.flat_map do |cp|
-        next_moves = valid_moves_for(map[cp[0]][cp[1]], cp).reject { |m| visited.include?(m) }
-        # puts '-' * 50
-        # puts "tile: #{map[cp[0]][cp[1]]}"
-        # puts "cp: #{cp}"
-        # puts "next: #{next_moves}"
-
-        visited.concat(next_moves)
-        # puts "visited concat: #{visited.inspect}"
-        # puts '-' * 50
-        next_moves
+        valid_moves_for(map[cp[0]][cp[1]], cp, visited)
       end
       steps += 1
-      # puts "current positions: #{current_positions}"
     end
-    # puts "visited: #{visited.inspect}"
-    # puts "steps: #{steps}"
 
     steps
   end
 
   def self.part2
+    start = [0, 0]
+    visited = []
+
+    map = INPUT.map.with_index do |row, index|
+      s_position = row.index('S')
+      start = [index, s_position] if s_position
+      row.strip.split('')
+    end
+    visited << start
+
+    current_positions = valid_moves_for(type_start(start, map), start, visited)
+    steps = 1
+
+    until current_positions.length == 1
+      current_positions = current_positions.flat_map do |cp|
+        valid_moves_for(map[cp[0]][cp[1]], cp, visited)
+      end
+      steps += 1
+    end
+
+    steps
   end
 end
