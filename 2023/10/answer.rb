@@ -53,7 +53,6 @@ module Day10
   end
 
   def self.part1
-    steps = 0
     start = [0, 0]
     visited = []
 
@@ -65,6 +64,7 @@ module Day10
     visited << start
 
     current_positions = valid_moves_for(type_start(start, map), start)
+    steps = 1
     visited.concat(current_positions)
 
     # puts "visited: #{visited.inspect}"
@@ -89,7 +89,7 @@ module Day10
     # puts "visited: #{visited.inspect}"
     # puts "steps: #{steps}"
 
-    steps + 1
+    steps
   end
 
   def self.part2
