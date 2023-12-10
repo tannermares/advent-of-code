@@ -12,4 +12,4 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
     steps:
     - uses: actions/checkout@v3
-    - run: node --test 2023/**/*.test.js
+    - run: node --test **/*.test.js
