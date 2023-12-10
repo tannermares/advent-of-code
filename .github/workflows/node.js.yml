@@ -1,4 +1,4 @@
-name: Run JS Tests
+name: Javascript
 on:
   push:
     branches: [ "main" ]
