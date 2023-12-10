@@ -77,6 +77,27 @@ module Day10
     steps
   end
 
+  def self.surrounded_by_pipe(position, visited, map)
+    north = position[0].zero? ? nil : map[position[0] - 1][position[1]]
+    south = position[0] + 1 == map.length ? nil : map[position[0] + 1][position[1]]
+    east = position[1] + 1 == map[0].length ? nil : map[position[0]][position[1] + 1]
+    west = position[1].zero? ? nil : map[position[0]][position[1] - 1]
+
+    puts '=' * 50
+    puts north
+    puts south
+    puts east
+    puts west
+    puts '-' * 50
+    puts visited.include?(north)
+    puts visited.include?(south)
+    puts visited.include?(east)
+    puts visited.include?(west)
+    puts '=' * 50
+
+    visited.include?(north) && visited.include?(south) && visited.include?(east) && visited.include?(west)
+  end
+
   def self.part2
     start = [0, 0]
     visited = []
@@ -98,6 +119,8 @@ module Day10
       steps += 1
     end
 
-    steps
+    visited.count do |position|
+      surrounded_by_pipe(position, visited, map)
+    end
   end
 end
