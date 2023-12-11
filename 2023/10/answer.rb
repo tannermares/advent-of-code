@@ -78,24 +78,15 @@ module Day10
   end
 
   def self.surrounded_by_pipe(position, visited, map)
-    north = position[0].zero? ? nil : map[position[0] - 1][position[1]]
-    south = position[0] + 1 == map.length ? nil : map[position[0] + 1][position[1]]
-    east = position[1] + 1 == map[0].length ? nil : map[position[0]][position[1] + 1]
-    west = position[1].zero? ? nil : map[position[0]][position[1] - 1]
+    north = position[0].zero? ? nil : [position[0] - 1, position[1]]
+    south = position[0] + 1 == map.length ? nil : [position[0] + 1, position[1]]
+    east = position[1] + 1 == map[0].length ? nil : [position[0], position[1] + 1]
+    west = position[1].zero? ? nil : [position[0], position[1] - 1]
 
-    puts '=' * 50
-    puts north
-    puts south
-    puts east
-    puts west
-    puts '-' * 50
-    puts visited.include?(north)
-    puts visited.include?(south)
-    puts visited.include?(east)
-    puts visited.include?(west)
-    puts '=' * 50
-
-    visited.include?(north) && visited.include?(south) && visited.include?(east) && visited.include?(west)
+    visited.include?(north) && # || (north && surrounded_by_pipe([position[0] - 1, position[1]], visited, map))) &&
+      visited.include?(south) && # || (south && surrounded_by_pipe([position[0] + 1, position[1]], visited, map))) &&
+      visited.include?(east) && # || (east && surrounded_by_pipe([position[0], position[1] + 1], visited, map))) &&
+      visited.include?(west) # || (west && surrounded_by_pipe([position[0], position[1] - 1], visited, map)))
   end
 
   def self.part2
