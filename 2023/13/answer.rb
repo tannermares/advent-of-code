@@ -44,6 +44,14 @@ module Day13
     valid_leading_reflections || valid_trailing_reflections || 0
   end
 
+  def self.fix_reflection(grid)
+    grid.map.with_index do |row, index|
+      row.map_with_index do |el, idx|
+        el != grid[index + 1][idx]
+      end
+    end
+  end
+
   def self.part1
     grid_index = 0
 

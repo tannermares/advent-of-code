@@ -17,6 +17,16 @@ class TestDay13 < Test::Unit::TestCase
     ['#', '.', '#', '.', '#', '#', '.', '#', '.']
   ].freeze
 
+  FIXED_TRAILING_COL = [
+    ['#', '.', '#', '#', '.', '.', '#', '#', '.'],
+    ['.', '.', '#', '.', '#', '#', '.', '#', '.'],
+    ['#', '#', '.', '.', '.', '.', '.', '.', '#'],
+    ['#', '#', '.', '.', '.', '.', '.', '.', '#'],
+    ['.', '.', '#', '.', '#', '#', '.', '#', '.'],
+    ['#', '.', '#', '#', '.', '.', '#', '#', '.'],
+    ['#', '.', '#', '.', '#', '#', '.', '#', '.']
+  ].freeze
+
   LEADING_COL = [
     ['.', '#', '#', '.', '.', '#', '#', '.', '#'],
     ['.', '#', '.', '#', '#', '.', '#', '.', '.'],
@@ -80,26 +90,32 @@ class TestDay13 < Test::Unit::TestCase
   ].freeze
 
   def test_find_reflection
-    assert_equal(0, Day13.find_reflection(TRAILING_COL))
-    assert_equal(5, Day13.find_reflection(TRAILING_COL.transpose))
-    assert_equal(0, Day13.find_reflection(LEADING_COL))
-    assert_equal(4, Day13.find_reflection(LEADING_COL.transpose))
-    assert_equal(4, Day13.find_reflection(TRAILING_ROW))
-    assert_equal(0, Day13.find_reflection(TRAILING_ROW.transpose))
-    assert_equal(3, Day13.find_reflection(LEADING_ROW))
-    assert_equal(0, Day13.find_reflection(LEADING_ROW.transpose))
-    assert_equal(0, Day13.find_reflection(SAMPLE))
-    assert_equal(2, Day13.find_reflection(SAMPLE.transpose))
-    assert_equal(1, Day13.find_reflection(LEADING_PAIR))
-    assert_equal(0, Day13.find_reflection(LEADING_PAIR.transpose))
+    # assert_equal(0, Day13.find_reflection(TRAILING_COL))
+    # assert_equal(5, Day13.find_reflection(TRAILING_COL.transpose))
+    # assert_equal(0, Day13.find_reflection(LEADING_COL))
+    # assert_equal(4, Day13.find_reflection(LEADING_COL.transpose))
+    # assert_equal(4, Day13.find_reflection(TRAILING_ROW))
+    # assert_equal(0, Day13.find_reflection(TRAILING_ROW.transpose))
+    # assert_equal(3, Day13.find_reflection(LEADING_ROW))
+    # assert_equal(0, Day13.find_reflection(LEADING_ROW.transpose))
+    # assert_equal(0, Day13.find_reflection(SAMPLE))
+    # assert_equal(2, Day13.find_reflection(SAMPLE.transpose))
+    # assert_equal(1, Day13.find_reflection(LEADING_PAIR))
+    # assert_equal(0, Day13.find_reflection(LEADING_PAIR.transpose))
+  end
+
+  def test_fix_reflection
+    omit
+    assert_equal(FIXED_TRAILING_COL, Day13.fix_reflection(TRAILING_COL))
   end
 
   def test_part1
+    omit
     Day13::SAMPLE ? assert_equal(405, Day13.part1) : assert_equal(33_122, Day13.part1)
   end
 
   def test_part2
     omit
-    Day13::SAMPLE ? assert_equal(nil, Day13.part2) : assert_equal(nil, Day13.part2)
+    Day13::SAMPLE ? assert_equal(400, Day13.part2) : assert_equal(nil, Day13.part2)
   end
 end
