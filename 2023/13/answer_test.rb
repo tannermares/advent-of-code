@@ -269,74 +269,74 @@ class TestDay13 < Test::Unit::TestCase
     ['#', '.', '.', '#', '.', '#', '.', '#', '.', '.', '.', '#', '#', '#', '.']
   ].freeze
 
-  # def test_find_reflection
-  #   assert_equal(0, Day13.find_reflection(TRAILING_COL))
-  #   assert_equal(5, Day13.find_reflection(TRAILING_COL.transpose))
-  #   assert_equal(0, Day13.find_reflection(LEADING_COL))
-  #   assert_equal(4, Day13.find_reflection(LEADING_COL.transpose))
-  #   assert_equal(4, Day13.find_reflection(TRAILING_ROW))
-  #   assert_equal(0, Day13.find_reflection(TRAILING_ROW.transpose))
-  #   assert_equal(3, Day13.find_reflection(LEADING_ROW))
-  #   assert_equal(0, Day13.find_reflection(LEADING_ROW.transpose))
-  #   assert_equal(0, Day13.find_reflection(SAMPLE))
-  #   assert_equal(2, Day13.find_reflection(SAMPLE.transpose))
-  #   assert_equal(1, Day13.find_reflection(LEADING_PAIR))
-  #   assert_equal(0, Day13.find_reflection(LEADING_PAIR.transpose))
-  #   assert_equal(0, Day13.find_reflection(VERTICAL_REFLECTION))
-  #   assert_equal(5, Day13.find_reflection(VERTICAL_REFLECTION.transpose))
-  #   assert_equal(4, Day13.find_reflection(HORIZONTAL_REFLECTION))
-  #   assert_equal(0, Day13.find_reflection(HORIZONTAL_REFLECTION.transpose))
+  def test_find_reflection
+    assert_equal(0, Day13.find_reflection(TRAILING_COL))
+    assert_equal(5, Day13.find_reflection(TRAILING_COL.transpose))
+    assert_equal(0, Day13.find_reflection(LEADING_COL))
+    assert_equal(4, Day13.find_reflection(LEADING_COL.transpose))
+    assert_equal(4, Day13.find_reflection(TRAILING_ROW))
+    assert_equal(0, Day13.find_reflection(TRAILING_ROW.transpose))
+    assert_equal(3, Day13.find_reflection(LEADING_ROW))
+    assert_equal(0, Day13.find_reflection(LEADING_ROW.transpose))
+    assert_equal(0, Day13.find_reflection(SAMPLE))
+    assert_equal(2, Day13.find_reflection(SAMPLE.transpose))
+    assert_equal(1, Day13.find_reflection(LEADING_PAIR))
+    assert_equal(0, Day13.find_reflection(LEADING_PAIR.transpose))
+    assert_equal(0, Day13.find_reflection(VERTICAL_REFLECTION))
+    assert_equal(5, Day13.find_reflection(VERTICAL_REFLECTION.transpose))
+    assert_equal(4, Day13.find_reflection(HORIZONTAL_REFLECTION))
+    assert_equal(0, Day13.find_reflection(HORIZONTAL_REFLECTION.transpose))
 
-  #   assert_equal(10, Day13.find_reflection(NO_FIXES))
-  #   assert_equal(0, Day13.find_reflection(NO_FIXES.transpose))
-  # end
-
-  # def test_array_difference
-  #   assert_equal([], Day13.array_difference(VERTICAL_REFLECTION[0], VERTICAL_REFLECTION[0]))
-  #   assert_equal([0], Day13.array_difference(['.', '.', '#', '#', '.', '.', '#', '#', '.'], VERTICAL_REFLECTION[0]))
-  #   assert_equal([4], Day13.array_difference(['#', '.', '.', '.', '.', '#', '.', '.', '#'], HORIZONTAL_REFLECTION[0]))
-  # end
-
-  def test_fix_reflection
-    # assert_equal(FIXED_VERTICAL_REFLECTION, Day13.fix_reflection(0, VERTICAL_REFLECTION))
-    # assert_equal(nil, Day13.fix_reflection(VERTICAL_REFLECTION.length - 1, VERTICAL_REFLECTION))
-    # assert_equal(nil, Day13.fix_reflection(0, VERTICAL_REFLECTION.transpose))
-    # assert_equal(nil, Day13.fix_reflection(VERTICAL_REFLECTION.transpose.length - 1, VERTICAL_REFLECTION.transpose))
-
-    # assert_equal(FIXED_HORIZONTAL_REFLECTION, Day13.fix_reflection(0, HORIZONTAL_REFLECTION))
-    # assert_equal(nil, Day13.fix_reflection(HORIZONTAL_REFLECTION.length - 1, HORIZONTAL_REFLECTION))
-    # assert_equal(nil, Day13.fix_reflection(0, HORIZONTAL_REFLECTION.transpose))
-    # assert_equal(nil, Day13.fix_reflection(HORIZONTAL_REFLECTION.transpose.length - 1, HORIZONTAL_REFLECTION.transpose))
-
-    # assert_equal(NO_FIXES_FIXED, Day13.fix_reflection(0, NO_FIXES))
-    # assert_equal(nil, Day13.fix_reflection(NO_FIXES.length - 1, NO_FIXES))
-    # assert_equal(nil, Day13.fix_reflection(0, NO_FIXES.transpose))
-    # assert_equal(nil, Day13.fix_reflection(NO_FIXES.transpose.length - 1, NO_FIXES.transpose))
-
-    # assert_equal(nil, Day13.fix_reflection(0, MORE_NO_FIXES))
-    # assert_equal(nil, Day13.fix_reflection(MORE_NO_FIXES.length - 1, MORE_NO_FIXES))
-    # assert_equal(MORE_NO_FIXES_FIXED.transpose, Day13.fix_reflection(0, MORE_NO_FIXES.transpose))
-    # assert_equal(nil, Day13.fix_reflection(MORE_NO_FIXES.transpose.length - 1, MORE_NO_FIXES.transpose))
-
-    # assert_equal(nil, Day13.fix_reflection(0, AGAIN_NO_FIXES))
-    # assert_equal(nil, Day13.fix_reflection(AGAIN_NO_FIXES.length - 1, AGAIN_NO_FIXES))
-    # assert_equal(nil, Day13.fix_reflection(0, AGAIN_NO_FIXES_TRANSPOSED))
-    # assert_equal(AGAIN_NO_FIXED_TRANSPOSED, Day13.fix_reflection(AGAIN_NO_FIXES_TRANSPOSED.length - 1, AGAIN_NO_FIXES_TRANSPOSED))
-
-    # assert_equal(nil, Day13.fix_reflection(0, OMG_HOW))
-    # assert_equal(nil, Day13.fix_reflection(OMG_HOW.length - 1, OMG_HOW))
-    # assert_equal(nil, Day13.fix_reflection(0, OMG_HOW_TRANSPOSED))
-    # assert_equal(OMG_HOW_TRANSPOSED_FIXED, Day13.fix_reflection(OMG_HOW_TRANSPOSED.length - 1, OMG_HOW_TRANSPOSED))
+    assert_equal(10, Day13.find_reflection(NO_FIXES))
+    assert_equal(0, Day13.find_reflection(NO_FIXES.transpose))
   end
 
-  # def test_find_fixed_reflection
-  #   assert_equal([3, 0], Day13.find_fixed_reflection(VERTICAL_REFLECTION))
-  #   assert_equal([1, 0], Day13.find_fixed_reflection(HORIZONTAL_REFLECTION))
-  # end
+  def test_array_difference
+    assert_equal([], Day13.array_difference(VERTICAL_REFLECTION[0], VERTICAL_REFLECTION[0]))
+    assert_equal([0], Day13.array_difference(['.', '.', '#', '#', '.', '.', '#', '#', '.'], VERTICAL_REFLECTION[0]))
+    assert_equal([4], Day13.array_difference(['#', '.', '.', '.', '.', '#', '.', '.', '#'], HORIZONTAL_REFLECTION[0]))
+  end
 
-  # def test_part1
-  #   Day13::SAMPLE ? assert_equal(405, Day13.part1) : assert_equal(33_122, Day13.part1)
-  # end
+  def test_fix_reflection
+    assert_equal(FIXED_VERTICAL_REFLECTION, Day13.fix_reflection(0, VERTICAL_REFLECTION))
+    assert_equal(nil, Day13.fix_reflection(VERTICAL_REFLECTION.length - 1, VERTICAL_REFLECTION))
+    assert_equal(nil, Day13.fix_reflection(0, VERTICAL_REFLECTION.transpose))
+    assert_equal(nil, Day13.fix_reflection(VERTICAL_REFLECTION.transpose.length - 1, VERTICAL_REFLECTION.transpose))
+
+    assert_equal(FIXED_HORIZONTAL_REFLECTION, Day13.fix_reflection(0, HORIZONTAL_REFLECTION))
+    assert_equal(nil, Day13.fix_reflection(HORIZONTAL_REFLECTION.length - 1, HORIZONTAL_REFLECTION))
+    assert_equal(nil, Day13.fix_reflection(0, HORIZONTAL_REFLECTION.transpose))
+    assert_equal(nil, Day13.fix_reflection(HORIZONTAL_REFLECTION.transpose.length - 1, HORIZONTAL_REFLECTION.transpose))
+
+    assert_equal(NO_FIXES_FIXED, Day13.fix_reflection(0, NO_FIXES))
+    assert_equal(nil, Day13.fix_reflection(NO_FIXES.length - 1, NO_FIXES))
+    assert_equal(nil, Day13.fix_reflection(0, NO_FIXES.transpose))
+    assert_equal(nil, Day13.fix_reflection(NO_FIXES.transpose.length - 1, NO_FIXES.transpose))
+
+    assert_equal(nil, Day13.fix_reflection(0, MORE_NO_FIXES))
+    assert_equal(nil, Day13.fix_reflection(MORE_NO_FIXES.length - 1, MORE_NO_FIXES))
+    assert_equal(MORE_NO_FIXES_FIXED.transpose, Day13.fix_reflection(0, MORE_NO_FIXES.transpose))
+    assert_equal(nil, Day13.fix_reflection(MORE_NO_FIXES.transpose.length - 1, MORE_NO_FIXES.transpose))
+
+    assert_equal(nil, Day13.fix_reflection(0, AGAIN_NO_FIXES))
+    assert_equal(nil, Day13.fix_reflection(AGAIN_NO_FIXES.length - 1, AGAIN_NO_FIXES))
+    assert_equal(nil, Day13.fix_reflection(0, AGAIN_NO_FIXES_TRANSPOSED))
+    assert_equal(AGAIN_NO_FIXED_TRANSPOSED, Day13.fix_reflection(AGAIN_NO_FIXES_TRANSPOSED.length - 1, AGAIN_NO_FIXES_TRANSPOSED))
+
+    assert_equal(nil, Day13.fix_reflection(0, OMG_HOW))
+    assert_equal(nil, Day13.fix_reflection(OMG_HOW.length - 1, OMG_HOW))
+    assert_equal(nil, Day13.fix_reflection(0, OMG_HOW_TRANSPOSED))
+    assert_equal(OMG_HOW_TRANSPOSED_FIXED, Day13.fix_reflection(OMG_HOW_TRANSPOSED.length - 1, OMG_HOW_TRANSPOSED))
+  end
+
+  def test_find_fixed_reflection
+    assert_equal([3, 0], Day13.find_fixed_reflection(VERTICAL_REFLECTION))
+    assert_equal([1, 0], Day13.find_fixed_reflection(HORIZONTAL_REFLECTION))
+  end
+
+  def test_part1
+    Day13::SAMPLE ? assert_equal(405, Day13.part1) : assert_equal(33_122, Day13.part1)
+  end
 
   # 48_470 too high
   def test_part2
