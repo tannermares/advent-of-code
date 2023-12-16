@@ -3,7 +3,7 @@
 
 # Day 13
 module Day13
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
 
@@ -19,15 +19,10 @@ module Day13
   end
 
   def self.possible_reflections(grid)
-    leading_reflections = []
-    trailing_reflections = []
-
-    grid.each_with_index do |row, index|
-      leading_reflections << index if grid[0] == row && index != 0
-      trailing_reflections << index if grid[grid.length - 1] == row && index != grid.length - 1
+    grid.each_with_object([[], []]).with_index do |(row, acc), index|
+      acc[0] << index if grid[0] == row && index != 0
+      acc[1] << index if grid[grid.length - 1] == row && index != grid.length - 1
     end
-
-    [leading_reflections, trailing_reflections]
   end
 
   def self.find_reflection(grid)
