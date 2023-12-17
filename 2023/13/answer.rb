@@ -149,10 +149,32 @@ module Day13
       vertical_reflection = find_reflection(end_col.transpose)
     end
 
-    [
-      original_horizontal_reflection == horizontal_reflection ? 0 : horizontal_reflection,
-      original_vertical_reflection == vertical_reflection ? 0 : vertical_reflection
-    ]
+    puts '-' * 50
+    puts "OG HORIZ: #{original_horizontal_reflection.inspect}"
+    puts "OG VERT: #{original_vertical_reflection.inspect}"
+    puts "HORIZ: #{horizontal_reflection.inspect}"
+    puts "VERT: #{vertical_reflection.inspect}"
+
+    if original_horizontal_reflection == vertical_reflection && vertical_reflection.positive?
+      puts "OG_H_MATCHED_V: #{[0, horizontal_reflection].inspect}"
+      puts '-' * 50
+      [0, horizontal_reflection]
+    elsif original_vertical_reflection == horizontal_reflection && horizontal_reflection.positive?
+      puts "OG_V_MATCHED_H: #{[vertical_reflection, 0].inspect}"
+      puts '-' * 50
+      [vertical_reflection, 0]
+    else
+      puts grid.inspect
+      puts "NORMAL: #{[
+        original_horizontal_reflection == horizontal_reflection ? 0 : horizontal_reflection, 
+        original_vertical_reflection == vertical_reflection ? 0 : vertical_reflection
+      ].inspect}"
+      puts '-' * 50
+      [
+        original_horizontal_reflection == horizontal_reflection ? 0 : horizontal_reflection, 
+        original_vertical_reflection == vertical_reflection ? 0 : vertical_reflection
+      ]
+    end
   end
 
   def self.part1
