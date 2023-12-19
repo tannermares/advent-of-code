@@ -23,3 +23,5 @@ Day | Ruby | Javascipt
 [15](https://github.com/tannermares/advent-of-code/tree/main/2023/15)|[⭐️](https://github.com/tannermares/advent-of-code/tree/main/2023/15/answer.rb)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/15/answer.js)
 [16](https://github.com/tannermares/advent-of-code/tree/main/2023/16)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/16/answer.rb)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/16/answer.js)
 [17](https://github.com/tannermares/advent-of-code/tree/main/2023/17)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/17/answer.rb)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/17/answer.js)
+[18](https://github.com/tannermares/advent-of-code/tree/main/2023/18)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/18/answer.rb)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/18/answer.js)
+[19](https://github.com/tannermares/advent-of-code/tree/main/2023/19)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/19/answer.rb)|[](https://github.com/tannermares/advent-of-code/tree/main/2023/19/answer.js)
