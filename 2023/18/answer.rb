@@ -79,7 +79,7 @@ module Day18
       direction, amount, color = row.split(' ')
       amount = amount.to_i
       color = color.gsub(/\(|\)/, '')
-      { direction:, amount:, color: }
+      { direction: direction, amount: amount, color: color }
     end
     dig = dig_with_plan(dig_plan)
     filled_dig = fill_dig(dig)
