@@ -3,9 +3,29 @@
 
 # Day 19
 module Day19
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
+
+  def self.simple_parse_workflow(workflow_string)
+    workflow_name, rules = workflow_string.split('{')
+    rules_array = rules.gsub(/\}/, '').split(',')
+    rules = rules_array.map do |rule|
+      condition, destination = rule.split(':')
+      property, value = condition.split(/>|</)
+      gtolt = condition.scan(/>|</).first
+      possibilities =
+        if gtolt == '<'
+          value.to_i - 1
+        else
+          4000 - value.to_i + 1
+        end
+
+      { possibilities => destination }
+    end
+
+    { workflow_name.to_sym => rules }
+  end
 
   def self.parse_workflow(workflow_string)
     workflow_name, rules = workflow_string.split('{')
@@ -73,7 +93,15 @@ module Day19
   end
 
   def self.part2
-    INPUT.sum do |row|
+    workflows = {}
+    current_node = :in
+
+    INPUT.each do |row|
+      break if row == "\n"
+
+      workflows.merge!(simple_parse_workflow(row.strip))
     end
+
+    puts workflows
   end
 end
