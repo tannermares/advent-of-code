@@ -78,21 +78,49 @@ module Day17
     [new_paths, finished_paths]
   end
 
+  def self.take_greedy_step(paths, grid)
+    paths.map do |path|
+      last_step = path[:steps].last
+      next_coord = next_coord(last_step)
+      valid_space = valid_space(next_coord, grid)
+
+      next path.merge(status: 1) unless valid_space.positive?
+
+      new_paths = DIRECTION_MAPS[last_step[:direction]].map do |new_direction|
+        new_step = { coord: next_coord, direction: new_direction }
+        straight_count = new_direction == last_step[:direction] ? path[:straight_count] + 1 : path[:straight_count]
+        already_passed = path[:steps].any? { |step| step[:coord] == next_coord }
+        at_finish = next_coord == [grid[0].length - 1, grid.length - 1]
+        new_sum = path[:sum] + valid_space
+
+        next if straight_count > 3
+        next if already_passed
+
+        new_path = path.merge(straight_count: straight_count, steps: path[:steps] + [new_step], sum: new_sum)
+
+        return new_path.merge(status: 1) if at_finish
+
+        new_path
+      end
+
+      new_paths.reject(&:nil?).min_by { |p| p[:sum] }
+    end
+  end
+
   def self.part1(grid = INPUT.map { |row| row.strip.chars })
     puts grid.inspect
-    finished_paths = []
+
     paths = [
       { straight_count: 1, steps: [{ coord: [0, 0], direction: EAST }], status: 0, sum: 0 },
-      { straight_count: 1, steps: [{ coord: [0, 0], direction: SOUTH }], status: 0, sum: 0 }
+      { straight_count: 1, steps: [{ coord: [0, 0], direction: SOUTH }], status: 0, sum: 0 },
     ]
 
-    until paths.empty?
-      paths, fp = take_step(paths, grid)
-      finished_paths += fp unless fp.empty?
-      puts "paths: #{paths.length}, finished: #{finished_paths.length}"
+    until paths.all? { |p| p[:status] == 1 }
+      paths = take_greedy_step(paths, grid)
+      puts paths.each { |p| puts p.inspect }
     end
 
-    finished_paths.map { |p| p[:sum] }.min
+    paths.map { |p| p[:sum] }.min
   end
 
   def self.part2
