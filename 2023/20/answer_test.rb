@@ -9,7 +9,7 @@ require_relative 'answer'
 class TestDay20 < Test::Unit::TestCase
   def test_part1
     omit
-    Day20::SAMPLE ? assert_equal(nil, Day20.part1) : assert_equal(nil, Day20.part1)
+    Day20::SAMPLE ? assert_equal(32_000_000, Day20.part1) : assert_equal(nil, Day20.part1)
   end
 
   def test_part2
