@@ -9,10 +9,10 @@ module Day1
 
   def self.part1
     left_list, right_list = build_lists
-    sorted_lists = left_list.zip(right_list)
+    paired_lists = left_list.zip(right_list)
 
     difference = 0
-    sorted_lists.each do |pair|
+    paired_lists.each do |pair|
       difference += (pair[0] - pair[1]).abs
     end
 

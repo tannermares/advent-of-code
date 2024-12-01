@@ -4,20 +4,14 @@ const { describe, test } = require('node:test')
 const assert = require('assert')
 const { part1, part2, SAMPLE } = require('./answer.js')
 
-describe('dayXX', () => {
-  test('part1', (t) => {
-    t.skip()
-    return
+describe('day1', () => {
+  test('part1', () =>
     SAMPLE
-      ? assert.strictEqual(null, part1())
-      : assert.strictEqual(null, part1())
-  })
+      ? assert.strictEqual(part1(), 11)
+      : assert.strictEqual(part1(), 1765812))
 
-  test('part2', (t) => {
-    t.skip()
-    return
+  test('part2', () =>
     SAMPLE
-      ? assert.strictEqual(null, part2())
-      : assert.strictEqual(null, part2())
-  })
+      ? assert.strictEqual(part2(), 31)
+      : assert.strictEqual(part2(), 20520794))
 })
