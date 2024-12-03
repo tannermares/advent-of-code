@@ -9,15 +9,15 @@ describe('day2', () => {
     t.skip()
     return
     SAMPLE
-      ? assert.strictEqual(null, part1())
-      : assert.strictEqual(null, part1())
+      ? assert.strictEqual(part1(), null)
+      : assert.strictEqual(part1(), null)
   })
 
   test('part2', (t) => {
     t.skip()
     return
     SAMPLE
-      ? assert.strictEqual(null, part2())
-      : assert.strictEqual(null, part2())
+      ? assert.strictEqual(part2(), null)
+      : assert.strictEqual(part2(), null)
   })
 })
