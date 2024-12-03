@@ -23,26 +23,16 @@ module Day2
       index_to_drop = 0
       eventually_safe = false
 
-      while index_to_drop < nums.length - 1
+      while index_to_drop < nums.length
         new_nums = nums.reject.with_index { |_, index| index == index_to_drop }
         index_to_drop += 1
         if level_safe(new_nums)
-          puts '-' * 50
-          puts new_nums.inspect
-          puts 'EVENTUALLY SAFE'
-          puts '-' * 50
           eventually_safe = true
           break
         end
       end
 
-      next 1 if eventually_safe
-
-      puts '-' * 50
-      puts nums.inspect
-      puts 'UNSAFE'
-      puts '-' * 50
-      0
+      eventually_safe ? 1 : 0
     end
   end
 
