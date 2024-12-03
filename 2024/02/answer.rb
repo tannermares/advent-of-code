@@ -37,9 +37,9 @@ module Day2
   end
 
   def self.level_safe(nums)
-    prev = nums.first
     return false if nums.first == nums.last
 
+    prev = nums.first
     asc = nums.first < nums.last
     nums.drop(1).each do |n|
       if within_bounds(asc, prev, n)
