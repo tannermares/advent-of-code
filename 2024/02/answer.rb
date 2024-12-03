@@ -9,35 +9,65 @@ module Day2
 
   def self.part1
     INPUT.sum do |row|
-      safe = true
       nums = row.split(' ').map(&:to_i)
-      prev = nums.first
-      asc = nums.first < nums.last
-
-      nums.drop(1).each do |n|
-        if within_bounds(asc, prev, n)
-          prev = n
-          next
-        end
-
-        safe = false
-        break
-      end
-
-      safe ? 1 : 0
+      level_safe(nums) ? 1 : 0
     end
   end
 
   def self.part2
     INPUT.sum do |row|
+      nums = row.split(' ').map(&:to_i)
+
+      next 1 if level_safe(nums)
+
+      index_to_drop = 0
+      eventually_safe = false
+
+      while index_to_drop < nums.length - 1
+        new_nums = nums.reject.with_index { |_, index| index == index_to_drop }
+        index_to_drop += 1
+        if level_safe(new_nums)
+          puts '-' * 50
+          puts new_nums.inspect
+          puts 'EVENTUALLY SAFE'
+          puts '-' * 50
+          eventually_safe = true
+          break
+        end
+      end
+
+      next 1 if eventually_safe
+
+      puts '-' * 50
+      puts nums.inspect
+      puts 'UNSAFE'
+      puts '-' * 50
+      0
     end
   end
 
-  def self.within_bounds(asc, prev, n)
+  def self.level_safe(nums)
+    prev = nums.first
+    return false if nums.first == nums.last
+
+    asc = nums.first < nums.last
+    nums.drop(1).each do |n|
+      if within_bounds(asc, prev, n)
+        prev = n
+        next
+      end
+
+      return false
+    end
+
+    true
+  end
+
+  def self.within_bounds(asc, prev, num)
     if asc
-      prev == n - 1 || prev == n - 2 || prev == n - 3
+      prev == num - 1 || prev == num - 2 || prev == num - 3
     else
-      prev == n + 1 || prev == n + 2 || prev == n + 3
+      prev == num + 1 || prev == num + 2 || prev == num + 3
     end
   end
 end
