@@ -113,9 +113,7 @@ module Day21
       new_row
     end
 
-    puts "STEPS: #{steps}"
     steps.times { |n| paths, grid = take_step(paths, grid, n) }
-    grid.each { |r| puts r.inspect }
     grid.flatten.sum(&:to_i) + 1
   end
 end

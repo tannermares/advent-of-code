@@ -26,8 +26,6 @@ module Day20
       acc[name || module_type] = { type: module_type, state: 0, destinations: destinations.split(', ') }
     end
 
-    puts modules.inspect
-
     1000.times do
       lp, hp = cycle(modules)
       low_pulses += lp

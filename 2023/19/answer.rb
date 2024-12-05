@@ -101,7 +101,5 @@ module Day19
 
       workflows.merge!(simple_parse_workflow(row.strip))
     end
-
-    puts workflows
   end
 end

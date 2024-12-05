@@ -108,8 +108,6 @@ module Day17
   end
 
   def self.part1(grid = INPUT.map { |row| row.strip.chars })
-    puts grid.inspect
-
     paths = [
       { straight_count: 1, steps: [{ coord: [0, 0], direction: EAST }], status: 0, sum: 0 },
       { straight_count: 1, steps: [{ coord: [0, 0], direction: SOUTH }], status: 0, sum: 0 },
@@ -117,7 +115,6 @@ module Day17
 
     until paths.all? { |p| p[:status] == 1 }
       paths = take_greedy_step(paths, grid)
-      puts paths.each { |p| puts p.inspect }
     end
 
     paths.map { |p| p[:sum] }.min

@@ -74,7 +74,7 @@ module Day16
     grid = INPUT.map { |row| row.strip.split('') }
     paths = [{ status: 0, steps: [{ coord: [-1, 0], direction: EAST, space: grid[0][0] }] }]
     paths = take_step(paths, grid) until paths.all? { |path| path[:status].positive? }
-    # paths.each_with_index { |path, index| puts index; path[:steps].each { |step| puts step.inspect } }
+
     count_uniq_paths(paths) - 1
   end
 
