@@ -6,6 +6,8 @@ I've added some specs to aid in the refactoring so I wouldn't have to actually c
 
 ### Progress
 
-|                                 Day                                 |                                      Ruby                                       |                                   Javascript                                    |
-| :-----------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
-| [1](https://github.com/tannermares/advent-of-code/tree/main/2024/1) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/1/answer.rb) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/1/answer.js) |
+|                                  Day                                  |                                       Ruby                                       |                                    Javascript                                    |
+| :-------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| [01](https://github.com/tannermares/advent-of-code/tree/main/2024/01) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/01/answer.rb) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/01/answer.js) |
+| [02](https://github.com/tannermares/advent-of-code/tree/main/2024/02) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/02/answer.rb) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/02/answer.js) |
+| [03](https://github.com/tannermares/advent-of-code/tree/main/2024/03) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/03/answer.rb) | [⭐️](https://github.com/tannermares/advent-of-code/tree/main/2024/03/answer.js) |

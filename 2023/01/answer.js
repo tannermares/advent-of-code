@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const SAMPLE = true
+const SAMPLE = false
 const path = require('path')
 const fs = require('fs')
 const input = fs
