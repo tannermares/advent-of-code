@@ -30,8 +30,21 @@ module Day04
   end
 
   def self.part2
-    INPUT.sum do |row|
-    end
+    GRID.map.with_index do |row, i|
+      found = 0
+
+      row.each_with_index do |cell, j|
+        next unless cell == 'A'
+        next unless valid_north2?(i) && valid_south2?(i) && valid_east2?(j) && valid_west2?(j)
+
+        found += 1 if check_north_east2(i, j) && check_south_east2(i, j)
+        found += 1 if check_north_west2(i, j) && check_south_west2(i, j)
+        found += 1 if check_south_west2(i, j) && check_south_east2(i, j)
+        found += 1 if check_north_west2(i, j) && check_north_east2(i, j)
+      end
+
+      found
+    end.sum
   end
 
   def self.valid_north?(i)
@@ -96,5 +109,37 @@ module Day04
     return false unless valid_north?(i) && valid_west?(j)
 
     GRID[i - 1][j - 1] == 'M' && GRID[i - 2][j - 2] == 'A' && GRID[i - 3][j - 3] == 'S'
+  end
+
+  def self.valid_north2?(i)
+    i - 1 != -1
+  end
+
+  def self.valid_east2?(j)
+    j + 1 != GRID[0].length
+  end
+
+  def self.valid_south2?(i)
+    i + 1 != GRID.length
+  end
+
+  def self.valid_west2?(j)
+    j - 1 != -1
+  end
+
+  def self.check_north_east2(i, j)
+    GRID[i - 1][j + 1] == 'M' && GRID[i + 1][j - 1] == 'S'
+  end
+
+  def self.check_south_east2(i, j)
+    GRID[i + 1][j + 1] == 'M' && GRID[i - 1][j - 1] == 'S'
+  end
+
+  def self.check_south_west2(i, j)
+    GRID[i + 1][j - 1] == 'M' && GRID[i - 1][j + 1] == 'S'
+  end
+
+  def self.check_north_west2(i, j)
+    GRID[i - 1][j - 1] == 'M' && GRID[i + 1][j + 1] == 'S'
   end
 end
