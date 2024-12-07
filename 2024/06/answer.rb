@@ -55,23 +55,23 @@ module Day06
       next_position = guard_position.zip(DIRECTIONS[direction]).map { |a, b| a + b }
       new_grid[guard_position[1]][guard_position[0]] = 'X'
 
-      if steps != 0 && (guard_position == starting_position) && (direction + 1) % 4 == starting_direction
-        loops += 1
-        break
-      end
+      # if steps != 0 && (guard_position == starting_position) && (direction + 1) % 4 == starting_direction
+      #   loops += 1
+      #   break
+      # end
       break unless valid_position?(next_position)
 
-      if GRID[next_position[1]][next_position[0]] != '#' && obstacles && potential_loop?(guard_position, direction, obstacles)
-        _, new_loops = walk_grid(
-          grid: GRID,
-          starting_position: guard_position,
-          add_obstacle: next_position,
-          starting_direction: (direction + 1) % 4,
-          loops: loops
-        )
+      # if GRID[next_position[1]][next_position[0]] != '#' && obstacles && potential_loop?(guard_position, direction, obstacles)
+      #   _, new_loops = walk_grid(
+      #     grid: GRID,
+      #     starting_position: guard_position,
+      #     add_obstacle: next_position,
+      #     starting_direction: (direction + 1) % 4,
+      #     loops: loops
+      #   )
 
-        loops += new_loops
-      end
+      #   loops += new_loops
+      # end
 
       if new_grid[next_position[1]][next_position[0]] == '#'
         direction = (direction + 1) % 4
