@@ -11,8 +11,13 @@ class TestDay06 < Test::Unit::TestCase
     Day06::SAMPLE ? assert_equal(41, Day06.part1) : assert_equal(5_404, Day06.part1)
   end
 
+  # 5520 too high
+  # 2197
+  # 2195 too high??
+  # 2191
+  # 2183 ??
+  # 2180 too low
   def test_part2
-    omit
-    Day06::SAMPLE ? assert_equal(6, Day06.part2) : assert_equal(nil, Day06.part2)
+    Day06::SAMPLE ? assert_equal(6, Day06.part2) : assert_equal(5519, Day06.part2) #assert_operator(2_180, :<, Day06.part2) && assert_operator(5_520, :>, Day06.part2)
   end
 end
