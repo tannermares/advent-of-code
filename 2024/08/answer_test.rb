@@ -9,9 +9,10 @@ require_relative 'answer'
 class TestDay08 < Test::Unit::TestCase
 
   # 316 too low
+  # 348
   # 349 too high
   def test_part1
-    Day08::SAMPLE ? assert_equal(14, Day08.part1) : assert_equal(nil, Day08.part1)
+    Day08::SAMPLE ? assert_equal(14, Day08.part1) : assert_equal(348, Day08.part1)
   end
 
   def test_part2

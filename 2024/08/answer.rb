@@ -3,7 +3,7 @@
 
 # Day 08
 module Day08
-  SAMPLE = true
+  SAMPLE = false
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
   GRID = INPUT.map { |row| row.strip.chars }
@@ -26,17 +26,13 @@ module Day08
     frequencies.each_value do |nodes|
       nodes[:pairs] = nodes[:coords].combination(2).to_a
       nodes[:pairs].each do |pair|
-        nodes[:antinodes] += find_antinodes(pair[0], pair[1])
-        antinodes += nodes[:antinodes]
+        new_antinodes = find_antinodes(pair[0], pair[1])
+        nodes[:antinodes] += new_antinodes
+        antinodes += new_antinodes
       end
     end
 
-    # puts '-' * 50
-    # p antinodes.uniq
-    # p antinodes.uniq.filter { |an| valid_antinode?(an) }
-    # puts '-' * 50
-
-    antinodes.uniq.filter { |an| valid_antinode?(an) }.count
+    antinodes.uniq.filter { |a| valid_antinode?(a) }.count
   end
 
   def self.part2
@@ -48,23 +44,11 @@ module Day08
     x1, y1 = node
     x2, y2 = other_node
 
-    # Direction Vector
+    # Get slope
     dx = x2 - x1
     dy = y2 - y1
 
-    distance = Math.sqrt(dx**2 + dy**2)
-
-    # Unit Vector
-    ux = (dx / distance)
-    uy = dy / distance
-
-    # New Points
-    new_x1 = (x1 - distance * ux).to_i
-    new_y1 = (y1 - distance * uy).to_i
-    new_x2 = (x2 + distance * ux).to_i
-    new_y2 = (y2 + distance * uy).to_i
-
-    [[new_x1, new_y1], [new_x2, new_y2]]
+    [[x1 - dx, y1 - dy], [x2 + dx, y2 + dy]]
   end
 
   def self.valid_antinode?(antinode)
