@@ -47,7 +47,6 @@ module Day06
 
     visited_positions = Set.new
     loop_found = false
-    step = 0
 
     while valid_position?(loop_position)
       if visited_positions.include?([loop_position, loop_direction])
@@ -65,8 +64,6 @@ module Day06
       else
         loop_position = next_loop_position
       end
-
-      step += 1
     end
 
     loop_found
@@ -95,12 +92,6 @@ module Day06
 
   def self.find_guard
     GRID.each_with_index { |row, i| row.each_with_index { |cell, j| return [j, i] if cell == '^' } }
-  end
-
-  def self.find_obstacles
-    obstacles = []
-    GRID.each_with_index { |row, i| row.each_with_index { |cell, j| obstacles << [j, i] if cell == '#' } }
-    obstacles
   end
 
   def self.valid_position?(position)
