@@ -45,7 +45,7 @@ module Day06
     loop_position = find_guard
     loop_grid[potential_loop[1]][potential_loop[0]] = '#'
 
-    visited_positions = Set.new
+    visited_positions = ::Set.new
     loop_found = false
 
     while valid_position?(loop_position)
@@ -72,7 +72,7 @@ module Day06
   def self.find_path
     guard_position = find_guard
     direction = 0
-    visited_positions = Set.new
+    visited_positions = ::Set.new
 
     while valid_position?(guard_position)
       visited_positions.add(guard_position)
