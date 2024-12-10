@@ -13,7 +13,6 @@ class TestDay09 < Test::Unit::TestCase
 
   # 8_427_253_745_791 too high
   def test_part2
-    omit
     Day09::SAMPLE ? assert_equal(2_858, Day09.part2) : assert_equal(nil, Day09.part2)
   end
 end
