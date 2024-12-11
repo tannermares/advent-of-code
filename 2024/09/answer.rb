@@ -10,14 +10,9 @@ module Day09
   def self.part1
     expanded_disk = []
 
-    INPUT.first.chars.each_slice(2).with_index do |(file_count, free_space), index|
-      file_count.to_i.times do
-        expanded_disk << index
-      end
-
-      free_space.to_i.times do
-        expanded_disk << '.'
-      end
+    INPUT.first.chars.each_slice(2).with_index do |(file_count, free_space), file_id|
+      file_count.to_i.times { expanded_disk << file_id }
+      free_space.to_i.times { expanded_disk << '.' }
     end
 
     empty_space_pointer = 0
@@ -46,9 +41,9 @@ module Day09
     free_space_map = {}
     file_map = {}
 
-    INPUT.first.chars.each_slice(2).with_index do |(file_count, free_space), index|
-      file_count.to_i.times { expanded_disk << index }
-      file_map[index] = file_count.to_i
+    INPUT.first.chars.each_slice(2).with_index do |(file_count, free_space), file_id|
+      file_count.to_i.times { expanded_disk << file_id }
+      file_map[file_id] = { capacity: file_count.to_i, start: expanded_disk.length - file_count.to_i }
 
       free_space.to_i.times { expanded_disk << '.' }
       next if free_space.to_i.zero?
@@ -58,29 +53,34 @@ module Day09
     end
 
     file_id = expanded_disk.last
-    file_id_pointer = expanded_disk.length - 1
 
-    until file_id.zero?
-      file_count = file_map[file_id]
+    until file_id.negative?
+      file = file_map[file_id]
       available_free_spaces = free_space_map.reject { |_, value| value.empty? }.keys.sort
-      min_gap = available_free_spaces.find { |fs| fs >= file_count }
+      min_gap = available_free_spaces.find { |fs| fs >= file[:capacity] }
+      # puts '-' * 50
+      # puts "file id: #{file_id}"
+      # puts "file_count: #{file[:capacity]}"
+      # puts "available_free_spaces: #{available_free_spaces}"
+      # puts "min_gap: #{min_gap}"
+      # puts '-' * 50
+      if free_space_map[min_gap].first < file[:start]
+        if (free_space_start = free_space_map[min_gap]&.shift)
+          free_space_end = free_space_start + file[:capacity]
 
-      if (free_space_start = free_space_map[min_gap]&.shift)
-        free_space_end = free_space_start + file_count
+          (free_space_start...free_space_end).each_with_index do |n, i|
+            expanded_disk[n] = file_id
+            expanded_disk[file[:start] + i] = '.'
+          end
 
-        (free_space_start...free_space_end).each_with_index do |n, i|
-          expanded_disk[n] = file_id
-          expanded_disk[file_id_pointer - i] = '.'
-        end
-
-        if (left_over_gap = min_gap - file_count)
-          free_space_map[left_over_gap] ||= []
-          free_space_map[left_over_gap].push(free_space_end).sort!
+          if (left_over_gap = min_gap - file[:capacity])
+            free_space_map[left_over_gap] ||= []
+            free_space_map[left_over_gap].push(free_space_end).sort!
+          end
         end
       end
 
       file_id -= 1
-      file_id_pointer -= 1 while expanded_disk[file_id_pointer] != file_id
     end
 
     expanded_disk.map(&:to_i).each_with_index.sum do |n, index|
