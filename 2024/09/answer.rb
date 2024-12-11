@@ -57,14 +57,18 @@ module Day09
     until file_id.negative?
       file = file_map[file_id]
       available_free_spaces = free_space_map.reject { |_, value| value.empty? }.keys.sort
-      min_gap = available_free_spaces.find { |fs| fs >= file[:capacity] }
-      # puts '-' * 50
-      # puts "file id: #{file_id}"
-      # puts "file_count: #{file[:capacity]}"
-      # puts "available_free_spaces: #{available_free_spaces}"
-      # puts "min_gap: #{min_gap}"
-      # puts '-' * 50
-      if free_space_map[min_gap].first < file[:start]
+      possible_gaps = available_free_spaces.filter { |fs| fs >= file[:capacity] }
+      min_gap = nil
+      free_space_index = Float::INFINITY
+
+      possible_gaps.each do |pg|
+        if free_space_map[pg].min < free_space_index
+          min_gap = pg
+          free_space_index = free_space_map[pg].min
+        end
+      end
+
+      if !free_space_map[min_gap].nil? && free_space_map[min_gap].first < file[:start]
         if (free_space_start = free_space_map[min_gap]&.shift)
           free_space_end = free_space_start + file[:capacity]
 
