@@ -9,9 +9,9 @@ name: Ruby
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 permissions:
   contents: read
 jobs:
@@ -19,8 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.2']
+        ruby-version: ['3.3']
     steps:
-    - uses: actions/checkout@v3
-    - name: Run tests
-      run: ruby -rtest-unit -e run_test */**/*_test.rb
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: ruby -rtest-unit -e run_test */**/*_test.rb

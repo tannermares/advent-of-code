@@ -1,15 +1,15 @@
 name: Javascript
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [21.x]
+        node-version: [23.x]
     steps:
-    - uses: actions/checkout@v3
-    - run: node --test */**/*.test.js
+      - uses: actions/checkout@v3
+      - run: node --test */**/*.test.js
