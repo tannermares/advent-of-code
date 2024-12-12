@@ -6,32 +6,59 @@ module Day11
   SAMPLE = false
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
+  STONES = INPUT.first.split(' ').map(&:to_i)
 
   def self.part1
-    stones = INPUT.first.split(' ').map(&:to_i)
+    stones = Hash.new(0)
+    STONES.each { |stone| stones[stone] += 1 }
+    blink_cache = {}
 
-    25.times { stones = stones.flat_map { |stone| blink(stone) } }
+    25.times do |n|
+      next_stones = Hash.new(0)
+      stones.each do |stone, count|
+        results = blink(stone, blink_cache)
+        Array(results).each { |result| next_stones[result] += count }
+        stones = next_stones
+      end
+    end
 
-    stones.length
+    stones.values.sum
   end
 
   def self.part2
-    INPUT.sum do |row|
+    stones = Hash.new(0)
+    STONES.each { |stone| stones[stone] += 1 }
+    blink_cache = {}
+
+    75.times do |n|
+      next_stones = Hash.new(0)
+      stones.each do |stone, count|
+        results = blink(stone, blink_cache)
+        Array(results).each { |result| next_stones[result] += count }
+        stones = next_stones
+      end
     end
+
+    stones.values.sum
   end
 
-  def self.blink(stone)
-    if stone.zero?
-      1
-    elsif stone.to_s.length.even?
-      stone_arr = stone.to_s.chars
-      mid_point = stone_arr.length / 2
-      first = stone_arr[...mid_point].join('').to_i
-      second = stone_arr[mid_point...].join('').to_i
+  def self.blink(stone, cache)
+    return cache[stone] if cache.key?(stone)
 
-      [first, second]
-    else
-      stone * 2024
-    end
+    result =
+      if stone.zero?
+        1
+      elsif stone.to_s.length.even?
+        mid_point = stone.to_s.length / 2
+        first = stone.to_s[...mid_point].to_i
+        second = stone.to_s[mid_point...].to_i
+
+        [first, second]
+      else
+        stone * 2024
+      end
+
+    cache[stone] = result
+    result
   end
 end
