@@ -1,5 +1,3 @@
-![Ruby](https://github.com/tannermares/advent-of-code/actions/workflows/ruby.yml/badge.svg) ![Javascript](https://github.com/tannermares/advent-of-code/actions/workflows/node.js.yml/badge.svg)
-
 # advent-of-code
 
 My adventures in https://adventofcode.com
