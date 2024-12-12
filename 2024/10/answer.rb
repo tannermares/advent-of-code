@@ -18,7 +18,7 @@ module Day10
       row.each_with_index do |cell, j|
         next unless cell.zero?
 
-        score += walk_trail(0, [j, i], collection: Set.new).size
+        score += walk_trail(0, [j, i], collection: ::Set.new).size
       end
     end
 
