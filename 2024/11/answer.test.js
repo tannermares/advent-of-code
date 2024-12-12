@@ -6,18 +6,14 @@ const { part1, part2, SAMPLE } = require('./answer.js')
 
 describe('day11', () => {
   test('part1', (t) => {
-    t.skip()
-    return
-    SAMPLE
-      ? assert.strictEqual(part1(), null)
-      : assert.strictEqual(part1(), null)
+    return SAMPLE
+      ? assert.strictEqual(part1(), 55_312)
+      : assert.strictEqual(part1(), 183_620)
   })
 
   test('part2', (t) => {
-    t.skip()
-    return
-    SAMPLE
-      ? assert.strictEqual(part2(), null)
-      : assert.strictEqual(part2(), null)
+    return SAMPLE
+      ? assert.strictEqual(part2(), 65_601_038_650_482)
+      : assert.strictEqual(part2(), 220_377_651_399_268)
   })
 })
