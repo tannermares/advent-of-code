@@ -3,7 +3,7 @@
 
 # Day 7
 module Day7
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
 
@@ -47,15 +47,15 @@ module Day7
       5
     elsif sorted_hand[0] == sorted_hand[2] && sorted_hand[3] == sorted_hand[4] || sorted_hand[0] == sorted_hand[1] && sorted_hand[2] == sorted_hand[4]
       4
-    elsif sorted_hand[0] == sorted_hand[2] && sorted_hand[3] != sorted_hand[4] || 
+    elsif sorted_hand[0] == sorted_hand[2] && sorted_hand[3] != sorted_hand[4] ||
           sorted_hand[0] != sorted_hand[1] && sorted_hand[2] == sorted_hand[4] ||
           sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4]
       3
-    elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4] || 
+    elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4] ||
           sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] == sorted_hand[4] ||
           sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] == sorted_hand[4]
       2
-    elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4] || 
+    elsif sorted_hand[0] == sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4] ||
           sorted_hand[0] != sorted_hand[1] && sorted_hand[1] == sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] != sorted_hand[4] ||
           sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] == sorted_hand[3] && sorted_hand[3] != sorted_hand[4] ||
           sorted_hand[0] != sorted_hand[1] && sorted_hand[1] != sorted_hand[2] && sorted_hand[2] != sorted_hand[3] && sorted_hand[3] == sorted_hand[4]

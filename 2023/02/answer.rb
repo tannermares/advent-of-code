@@ -3,7 +3,7 @@
 
 # Day 2
 module Day2
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   MAX_CUBES = { 'blue' => 14, 'green' => 13, 'red' => 12 }.freeze
 

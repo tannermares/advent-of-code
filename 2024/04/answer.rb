@@ -3,7 +3,7 @@
 
 # Day 04
 module Day04
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
   GRID = INPUT.map { |row| row.split('') }

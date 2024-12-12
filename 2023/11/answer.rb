@@ -5,7 +5,7 @@ require 'benchmark'
 
 # Day 11
 module Day11
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
   EMPTY_SPACE = '.'

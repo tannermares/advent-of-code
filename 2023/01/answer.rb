@@ -103,7 +103,7 @@ module Day1
   class Input
     attr_reader :file, :path_string
 
-    SAMPLE = false
+    SAMPLE = true
 
     def initialize
       @path_string = SAMPLE ? 'sample.txt' : 'input.txt'

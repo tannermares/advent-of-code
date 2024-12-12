@@ -3,7 +3,7 @@
 
 # Day 3
 module Day3
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
   PART_1_REGEX = /mul\((\d{1,3}),(\d{1,3})\)/.freeze
