@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'set'
+
 # Day 06
 module Day06
   SAMPLE = true
