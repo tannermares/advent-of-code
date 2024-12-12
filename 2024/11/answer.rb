@@ -26,8 +26,8 @@ module Day11
       stones.each do |stone, count|
         results = blink(stone, blink_cache)
         Array(results).each { |result| next_stones[result] += count }
-        stones = next_stones
       end
+      stones = next_stones
     end
 
     stones.values.sum
