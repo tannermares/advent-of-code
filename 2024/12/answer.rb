@@ -131,8 +131,9 @@ module Day12
       end
     end
 
-    garden_map.values.sum do |plots|
+    garden_map.sum do |key, plots|
       plots.sum do |plot|
+        puts "A region of #{key} plants with price #{plot[:locations].length} * #{plot[:corners]} = "
         plot[:corners] * plot[:locations].length
       end
     end
