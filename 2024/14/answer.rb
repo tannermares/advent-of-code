@@ -3,10 +3,14 @@
 
 # Day 14
 module Day14
-  SAMPLE = true
+  SAMPLE = false
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
-  GRID = SAMPLE ? [11, 7] : [101, 107]
+  GRID = SAMPLE ? [11, 7] : [101, 103]
+  FIRST_X = (0...GRID[0] / 2)
+  SECOND_X = (GRID[0] / 2 + 1...GRID[0])
+  FIRST_Y = (0...GRID[1] / 2)
+  SECOND_Y = (GRID[1] / 2 + 1...GRID[1])
 
   def self.part1
     robots = []
@@ -21,10 +25,10 @@ module Day14
 
     100.times do
       robots.each do |robot|
-        next_position = robot[:position].zip(robot[:velocity]).map { |a, b| a + b }
+        next_position = robot[:position].zip(robot[:velocity]).map(&:sum)
 
-        next_position[0] += GRID[0] if next_position[0].negative?
-        next_position[1] += GRID[1] if next_position[1].negative?
+        next_position[0] %= GRID[0] if next_position[0].negative?
+        next_position[1] %= GRID[1] if next_position[1].negative?
         next_position[0] %= GRID[0] if next_position[0] >= GRID[0]
         next_position[1] %= GRID[1] if next_position[1] >= GRID[1]
 
@@ -37,10 +41,10 @@ module Day14
     end
 
     positions.each do |pos, count|
-      quads[:one] += count if (0...GRID[0] / 2).include?(pos[0]) && (0...GRID[1] / 2).include?(pos[1])
-      quads[:two] += count if (GRID[0] / 2 + 1...GRID[0]).include?(pos[0]) && (0...GRID[1] / 2).include?(pos[1])
-      quads[:three] += count if (0...GRID[0] / 2).include?(pos[0]) && (GRID[1] / 2 + 1...GRID[1]).include?(pos[1])
-      quads[:four] += count if (GRID[0] / 2 + 1...GRID[0]).include?(pos[0]) && (GRID[1] / 2 + 1...GRID[1]).include?(pos[1])
+      next quads[:one] += count if FIRST_X.include?(pos[0]) && FIRST_Y.include?(pos[1])
+      next quads[:two] += count if SECOND_X.include?(pos[0]) && FIRST_Y.include?(pos[1])
+      next quads[:three] += count if FIRST_X.include?(pos[0]) && SECOND_Y.include?(pos[1])
+      quads[:four] += count if SECOND_X.include?(pos[0]) && SECOND_Y.include?(pos[1])
     end
 
     quads.values.reduce(1) { |acc, num| acc * num }
