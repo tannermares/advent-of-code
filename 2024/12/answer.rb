@@ -74,7 +74,7 @@ module Day12
     0b010_01_110 => 2,
     0b010_01_111 => 1,
     0b010_10_000 => 2,
-    0b010_10_010 => 0,
+    0b010_10_010 => 2,
     0b010_10_011 => 2,
     0b010_10_100 => 2,
     0b010_10_101 => 2,
@@ -183,7 +183,7 @@ module Day12
     0b110_10_111 => 0,
     0b110_11_000 => 1,
     0b110_11_001 => 1,
-    0b110_11_010 => 2,
+    0b110_11_010 => 3,
     0b110_11_011 => 2,
     0b110_11_100 => 1,
     0b110_11_101 => 1,
@@ -252,9 +252,8 @@ module Day12
       end
     end
 
-    garden_map.sum do |key, plots|
+    garden_map.sum do |_, plots|
       plots.sum do |plot|
-        # puts "A region of #{key} plants with price #{plot[:locations].length} * #{plot[:corners]} = "
         plot[:corners] * plot[:locations].length
       end
     end
@@ -301,13 +300,6 @@ module Day12
 
       bit_index = FULL_DIRECTIONS.length - 1 - index
       corner_bits |= (1 << bit_index)
-    end
-
-    if CORNER_MAP[corner_bits].nil?
-      puts "#{GRID[position[1] - 1][position[0] - 1]}#{GRID[position[1] - 1][position[0]]}#{GRID[position[1] - 1][position[0] + 1]}"
-      puts "#{GRID[position[1]][position[0] - 1]}#{GRID[position[1]][position[0]]}#{GRID[position[1]][position[0] + 1]}"
-      puts "#{GRID[position[1] + 1][position[0] - 1]}#{GRID[position[1] + 1][position[0]]}#{GRID[position[1] + 1][position[0] + 1]}"
-      p [position, "0b#{corner_bits.to_s(2).rjust(8, '0')}"]
     end
 
     CORNER_MAP[corner_bits].to_i
