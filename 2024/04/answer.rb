@@ -6,7 +6,7 @@ module Day04
   SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
-  GRID = INPUT.map { |row| row.split('') }
+  GRID = INPUT.map { |row| row.strip.chars }
 
   def self.part1
     GRID.map.with_index do |row, i|

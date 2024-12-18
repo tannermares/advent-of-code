@@ -8,7 +8,7 @@ module Day10
   SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
-  GRID = INPUT.map { |row| row.strip.split('').map(&:to_i) }
+  GRID = INPUT.map { |row| row.strip.chars.map(&:to_i) }
   HEIGHT = GRID.length
   WIDTH = GRID.first.length
   DIRECTIONS = [[0, -1], [1, 0], [0, 1], [-1, 0]].freeze
