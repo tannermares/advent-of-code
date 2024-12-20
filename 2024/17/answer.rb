@@ -3,7 +3,7 @@
 
 # Day 17
 module Day17
-  SAMPLE = false
+  SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
   OPCODES = %i[
@@ -37,17 +37,68 @@ module Day17
       state[:program] = program[1].split(',').map(&:to_i) if program
     end
 
-    while state[:instruction_pointer] <= state[:program].length - 1
+    while state[:instruction_pointer] < state[:program].length
       opcode = state[:program][state[:instruction_pointer]]
       operand = state[:program][state[:instruction_pointer] + 1]
       send(OPCODES[opcode], operand, state)
     end
 
-    state[:output].join('')
+    state[:output].join(',')
   end
 
   def self.part2
-    INPUT.sum do |row|
+    max_needle = 1_000_000_000
+    min_needle = 0
+    needle = max_needle / 2
+
+    state = {
+      registers: { a: needle, b: 0, c: 0 },
+      instruction_pointer: 0,
+      output: [],
+      program: []
+    }
+
+    INPUT.each do |row|
+      program = row.match(/Program: (.*)/)
+      state[:program] = program[1].split(',').map(&:to_i) if program
+    end
+
+    while state[:output] != state[:program]
+      unless state[:output].empty?
+        if state[:output].join('').to_i > state[:program].join('').to_i
+          max_needle = needle
+          needle = (max_needle / 2).floor
+          puts '-' * 50
+          puts 'OUTPUT TOO HIGH'
+          puts "needle: #{needle}"
+          p [min_needle, max_needle]
+          puts "Current output: #{state[:output].join('').to_i}"
+          puts '-' * 50
+        else
+          min_needle = needle
+          needle = (min_needle * 1.5).floor
+          puts '-' * 50
+          puts 'OUTPUT TOO LOW'
+          puts "needle: #{needle}"
+          p [min_needle, max_needle]
+          puts "Current output: #{state[:output].join('').to_i}"
+          puts '-' * 50
+        end
+      end
+
+      state[:registers][:a] = needle
+      state[:registers][:b] = 0
+      state[:registers][:c] = 0
+      state[:instruction_pointer] = 0
+      state[:output] = []
+
+      while state[:instruction_pointer] < state[:program].length
+        opcode = state[:program][state[:instruction_pointer]]
+        operand = state[:program][state[:instruction_pointer] + 1]
+        send(OPCODES[opcode], operand, state)
+      end
+
+      sleep(1)
     end
   end
 

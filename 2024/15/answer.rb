@@ -39,7 +39,7 @@ module Day15
       left_boxes: [],
       right_boxes: [],
       robot: nil,
-      walls: [],
+      walls: []
     }
 
     puts '-' * 50
