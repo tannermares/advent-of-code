@@ -21,9 +21,9 @@ module Day17
     state = {
       registers: { a: 0, b: 0, c: 0 },
       instruction_pointer: 0,
-      output: []
+      output: [],
+      program: []
     }
-    program = []
 
     INPUT.each do |row|
       register_a = row.match(/Register A: (\d*)/)
