@@ -1,98 +1,119 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'set'
+
 # Day 16
 module Day16
   SAMPLE = true
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
   INPUT = File.readlines(INPUT_PATH)
   GRID = INPUT.map { |row| row.strip.chars }
-  MOVE_SCORE = 1
-  ROTATE_SCORE = 1_000
+  HEIGHT = GRID.length
+  WIDTH = GRID.first.length
   DIRECTIONS = [[0, -1], [1, 0], [0, 1], [-1, 0]].freeze
 
   def self.part1
-    maze_start, maze_end = find_maze_positions
-    current_position = maze_start
-    current_direction = 1
-
-    graph = {}
-    visited = []
-
-    # Builds Weighted Graph
-    weigh_neighbors(current_position, current_direction, graph, visited)
-
-    parents = {}
-    costs = {}
-    processed = []
-
-    graph.each_value do |neighbors|
-      neighbors.each_key do |neighbor|
-        parents[neighbor] = nil
-        costs[neighbor] = Float::INFINITY
-      end
-    end
-
-    graph[maze_start].each do |neighbor, cost|
-      parents[neighbor] = maze_start
-      costs[neighbor] = cost
-    end
-    costs[maze_end] = Float::INFINITY
-
-    node = find_lowest_cost_node(costs, processed)
-
-    until node.nil?
-      cost = costs[node]
-      break unless graph[node]
-
-      graph[node].each do |neighbor, neighbor_cost|
-        new_cost = cost + neighbor_cost
-        if costs[neighbor] > new_cost
-          costs[neighbor] = new_cost
-          parents[neighbor] = node
-        end
-      end
-      processed << node
-      node = find_lowest_cost_node(costs, processed)
-    end
-
-    puts '-' * 50
-    pp graph
-    puts '-' * 50
-
-    puts '-' * 50
-    current_node = maze_end
-    until current_node == maze_start
-      p [current_node, costs[current_node]]
-      current_node = parents[current_node]
-    end
-    puts '-' * 50
-
-    costs[maze_end]
+    solved = solve_maze_a_star
+    solved[:cost]
   end
 
   def self.part2
-    INPUT.sum do |row|
+    solutions = solve_maze_a_stars
+    puts '-' * 50
+    p solutions
+    puts '-' * 50
+    visited = ::Set.new(solutions.flat_map { |sol| sol[:path] })
+    GRID.each_with_index do |row, i|
+      row.each_with_index do |cell, j|
+        print visited.include?([j, i]) ? 'O' : cell
+      end
+      print "\n"
     end
+
+    visited.size
   end
 
-  def self.weigh_neighbors(current_position, current_direction, graph, visited)
-    return if GRID.dig(*current_position.reverse) == 'E'
+  def self.solve_maze_a_star
+    maze_start, maze_end = find_maze_positions
+    initial_position = maze_start
+    initial_path = [maze_start]
+    initial_cost = 0
+    initial_direction = [1, 0]
+    total_cost = 0
+    priority_queue = [[initial_position, initial_path, initial_cost, initial_direction, total_cost]]
+    visited = {}
 
-    visited << current_position
-    graph[current_position] ||= {}
+    until priority_queue.empty?
+      current_position, path, g_cost, current_direction, = priority_queue.shift
 
-    DIRECTIONS.map.with_index do |direction, index|
-      next_position = current_position.zip(direction).map(&:sum)
-      next if GRID.dig(*next_position.reverse) == '#'
+      return { path:, cost: g_cost } if current_position == maze_end
 
-      next_cost = index == current_direction ? 1 : 1001
-      current_cost = graph[current_position][next_position] || Float::INFINITY
-      next if visited.include?(next_position)# && next_cost >= current_cost
+      DIRECTIONS.each do |direction|
+        next_position = current_position.zip(direction).map(&:sum)
+        next unless valid_position?(next_position)
 
-      graph[current_position][next_position] = next_cost
-      weigh_neighbors(next_position, index, graph, visited)
+        next_cell = GRID.dig(*next_position.reverse)
+        next unless ['.', 'E'].include?(next_cell)
+
+        rotation_cost = direction == current_direction ? 0 : 1000
+        new_g_cost = g_cost + 1 + rotation_cost
+        h_cost = manhattan_distance(next_position, maze_end)
+        total_cost = new_g_cost + h_cost
+
+        next if visited[[next_position, direction]] && visited[[next_position, direction]] <= new_g_cost
+
+        visited[[next_position, direction]] = new_g_cost
+        new_path = path + [next_position]
+        priority_queue << [next_position, new_path, new_g_cost, direction, total_cost]
+        priority_queue.sort_by! { |(_, _, _, _, total_cost)| total_cost }
+      end
     end
+
+    nil
+  end
+
+  def self.solve_maze_a_stars
+    maze_start, maze_end = find_maze_positions
+    initial_position = maze_start
+    initial_path = [maze_start]
+    initial_cost = 0
+    initial_direction = [1, 0]
+    total_cost = 0
+    priority_queue = [[initial_position, initial_path, initial_cost, initial_direction, total_cost]]
+    visited = {}
+    solutions = []
+
+    until priority_queue.empty?
+      current_position, path, g_cost, current_direction = priority_queue.shift
+
+      if current_position == maze_end
+        solutions << { path:, cost: g_cost }
+        next
+      end
+
+      DIRECTIONS.each do |direction|
+        next_position = current_position.zip(direction).map(&:sum)
+        next unless valid_position?(next_position)
+
+        next_cell = GRID.dig(*next_position.reverse)
+        next unless ['.', 'E'].include?(next_cell)
+
+        rotation_cost = direction == current_direction ? 0 : 1000
+        new_g_cost = g_cost + 1 + rotation_cost
+        h_cost = manhattan_distance(next_position, maze_end)
+        total_cost = new_g_cost + h_cost
+
+        next if visited[[next_position, direction]] && visited[[next_position, direction]] <= new_g_cost
+
+        visited[[next_position, direction]] = new_g_cost
+        new_path = path + [next_position]
+        priority_queue << [next_position, new_path, new_g_cost, direction, total_cost]
+        priority_queue.sort_by! { |(_, _, _, _, total_cost)| total_cost }
+      end
+    end
+
+    solutions
   end
 
   def self.find_maze_positions
@@ -109,18 +130,11 @@ module Day16
     [maze_start, maze_end]
   end
 
-  def self.find_lowest_cost_node(costs, processed)
-    lowest_cost = Float::INFINITY
-    lowest_cost_node = nil
+  def self.valid_position?(position)
+    position[0].between?(0, WIDTH - 1) && position[1].between?(0, HEIGHT - 1)
+  end
 
-    costs.each do |node, cost|
-      next if processed.include?(node)
-      next if lowest_cost < cost
-
-      lowest_cost = cost
-      lowest_cost_node = node
-    end
-
-    lowest_cost_node
+  def self.manhattan_distance(position1, position2)
+    (position1[0] - position2[0]).abs + (position1[1] - position2[1]).abs
   end
 end
