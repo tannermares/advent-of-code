@@ -169,7 +169,15 @@ module Day21
   end
 
   def self.part2
+    directional_robots = 25
+
     INPUT.sum do |row|
+      keys = row.strip.chars
+      key_presses = numeric_keypad(keys)
+      directional_robots.times do |i|
+        key_presses = direction_keypad(key_presses)
+      end
+      key_presses.length * keys.join.to_i
     end
   end
 
