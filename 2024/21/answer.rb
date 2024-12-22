@@ -86,7 +86,7 @@ module Day21
     ['3', '4'] => '^<<A',
     ['3', '5'] => '^<A',
     ['3', '6'] => '^A',
-    ['3', '7'] => '^^<<A',
+    ['3', '7'] => '<<^^A',
     ['3', '8'] => '^^<A',
     ['3', '9'] => '^^A',
     ['4', '4'] => 'A',
@@ -174,7 +174,7 @@ module Day21
     INPUT.sum do |row|
       keys = row.strip.chars
       key_presses = numeric_keypad(keys)
-      directional_robots.times do |i|
+      directional_robots.times do
         key_presses = direction_keypad(key_presses)
       end
       key_presses.length * keys.join.to_i
