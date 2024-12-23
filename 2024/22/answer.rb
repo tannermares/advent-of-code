@@ -16,22 +16,56 @@ module Day22
   end
 
   def self.part2
-    changes = Hash.new([])
+    changes = {}
+    possible_bests = {}
 
-    INPUT.sum do |row|
+    INPUT.each do |row|
+      key = row.strip
       secret = row.to_i
 
-      2000.times do
-        prev_secret = secret
+      2000.times do |i|
+        # prev_secret = secret
         secret = generate_secret(secret)
 
-        prev_ones = prev_secret.to_s.chars.last.to_i
-        ones = secret.to_s.chars.last.to_i
+        # puts '-' * 50
+        # puts key
+        # puts '-' * 50
 
-        changes[row] << { price: ones, change: ones - prev_ones }
+        # prev_price = prev_secret.to_s.chars.last.to_i
+        current_price = secret.to_s.chars.last.to_i
+        changes[key] ||= []
+        changes[key] << current_price#{ price: current_price, change: current_price - prev_price }
+
+        possible_best = !(i - 4).negative? && changes[key][i - 4] == current_price
+        next unless possible_best
+
+        # if !(i - 4).negative?
+        #   puts '-' * 50
+        #   p [changes[key][i - 4][:price], ones]
+        #   puts '-' * 50
+        # end
+
+        sequence = [
+          changes[key][i - 3] - changes[key][i - 4],
+          changes[key][i - 2] - changes[key][i - 3],
+          changes[key][i - 1] - changes[key][i - 2],
+          changes[key][i] - changes[key][i - 1]
+        ]
+        possible_bests[sequence] ||= {}
+        possible_bests[sequence][key] ||= []
+        possible_bests[sequence][key] << changes[key][i]
       end
-      0
     end
+
+    puts '-' * 50
+    pp possible_bests.sort.to_h
+    # best_sequence, best_prices = possible_bests.max_by { |_, prices| prices.values.sum }
+
+    puts '-' * 50
+    # p best_sequence
+    # p best_prices
+    puts '-' * 50
+    0#best_prices.values.sum
   end
 
   def self.generate_secret(number)
