@@ -49,8 +49,6 @@ module Day23
       processed << key
     end
 
-    pp networks
-
     networks.filter { |n| n.any? { |c| c.start_with?('t') } }.count
   end
 
