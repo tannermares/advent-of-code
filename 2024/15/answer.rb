@@ -3,10 +3,10 @@
 
 # Day 15
 module Day15
-  SAMPLE = true
+  SAMPLE = false
   INPUT_PATH = File.join(File.dirname(__FILE__), SAMPLE ? 'sample.txt' : 'input.txt').freeze
-  INPUT = File.readlines(INPUT_PATH)
-  GRID = INPUT.map { |row| row.strip.chars }
+  INPUT = File.readlines(INPUT_PATH).map(&:strip)
+  GRID = INPUT.map(&:chars)
   DIRECTIONS = { '<' => [-1, 0], '^' => [0, -1], '>' => [1, 0], 'v' => [0, 1] }.freeze
 
   def self.part1
@@ -36,24 +36,16 @@ module Day15
   def self.part2
     state = {
       directions: [],
-      left_boxes: [],
-      right_boxes: [],
+      boxes: [],
       robot: nil,
       walls: []
     }
 
-    puts '-' * 50
-    puts '-' * 50
-    puts '------------------START-------------'
-    pp expanded_grid
-    puts '-' * 50
-
     expanded_grid.each_with_index do |row, i|
       row.each_with_index do |cell, j|
         state[:walls] << [j, i] if cell == '#'
-        state[:left_boxes] << [j, i] if cell == '['
-        state[:right_boxes] << [j, i] if cell == ']'
-        state[:robot] = [j, i] if cell == '@'
+        state[:boxes] << [[j, i], [j + 1, i]] if cell == '['
+        state[:robot] = [[j, i], [j, i]] if cell == '@'
       end
     end
 
@@ -63,39 +55,16 @@ module Day15
       end
     end
 
-    puts '-' * 50
-    p state
-    puts '-' * 50
-
-    expanded_grid.length.times do |i|
-      expanded_grid[0].length.times do |j|
-        next print '#' if state[:walls].include?([j, i])
-        next print '[' if state[:left_boxes].include?([j, i])
-        next print ']' if state[:right_boxes].include?([j, i])
-        next print '@' if state[:robot] == [j, i]
-
-        print '.'
-      end
-      print "\n"
-    end
-
     state[:directions].each do |direction|
-      move_object2('@', state[:robot], state, direction)
+      new_state = move_object2(state[:robot], deep_dup(state), direction)
+      next if new_state.nil?
+
+      state = new_state
+      next_robot = shift_coords(state[:robot].first, direction)
+      state[:robot] = [next_robot, next_robot]
     end
 
-    expanded_grid.length.times do |i|
-      expanded_grid[0].length.times do |j|
-        next print '#' if state[:walls].include?([j, i])
-        next print '[' if state[:left_boxes].include?([j, i])
-        next print ']' if state[:right_boxes].include?([j, i])
-        next print '@' if state[:robot] == [j, i]
-
-        print '.'
-      end
-      print "\n"
-    end
-
-    state[:left_boxes].sum { |(x, y)| 100 * y + x }
+    state[:boxes].map(&:first).sum { |(x, y)| 100 * y + x }
   end
 
   def self.move_object(position, state, direction)
@@ -110,39 +79,87 @@ module Day15
     next_position
   end
 
-  def self.move_object2(cell, position, state, direction)
-    next_position = position.zip(DIRECTIONS[direction]).map(&:sum)
-    return position if state[:walls].include?(next_position)
+  def self.move_object2(object, state, direction)
+    case direction
+    when '<'
+      next_position_s = shift_coords(object.first, direction)
+      next_position_e = shift_coords(object.last, direction)
+      next_object = [next_position_s, next_position_e]
 
-    if (index = state[:left_boxes].index(next_position))
-      # case direction
-      # when '<'
-      #   next_lbox_pos = move_object2('[', next_position, state, direction)
+      return nil if state[:walls].include?(next_position_s)
 
-      # when '^'
-      #   next_lbox_pos = move_object2('[', next_position, state, direction)
-      #   next_rbox_pos = move_object2(']', [next_position[0] + 1, next_position[1]], state, direction)
+      neighbor_position_s = shift_coords(next_position_s, direction)
+      neighbor_object = [neighbor_position_s, next_position_s]
 
-      #   return position if next_lbox_pos == next_position || next_rbox_pos == [next_position[0] + 1, next_position[1]]
-      # when '>'
-      #   next_lbox2_pos = move_object2('[', next_position, state, direction)
-      # when 'v'
-      #   next_lbox_pos = move_object2('[', next_position, state, direction)
-      #   next_rbox_pos = move_object2(']', [next_position[0] + 1, next_position[1]], state, direction)
-      # end
+      if (index = state[:boxes].index(neighbor_object))
+        return nil if state[:walls].include?(neighbor_position_s)
 
-      # state[:left_boxes][index] = next_lbox_pos
-      # state[:right_boxes][index] = next_rbox_pos
+        new_state = move_object2(neighbor_object, deep_dup(state), direction)
+        return nil if new_state.nil? || state[:boxes][index] == new_state[:boxes][index]
+
+        state = new_state
+      end
+
+      if (my_index = state[:boxes].index(object))
+        state[:boxes][my_index] = next_object
+      end
+
+      state
+    when '^', 'v'
+      next_position_s = shift_coords(object.first, direction)
+      next_position_e = shift_coords(object.last, direction)
+      next_object = [next_position_s, next_position_e]
+
+      return nil if state[:walls].include?(next_position_s) || state[:walls].include?(next_position_e)
+
+      left_neighbor_index = state[:boxes].find_index { |box| box[1] == next_position_s }
+      right_neighbor_index = state[:boxes].find_index { |box| box[1] == next_position_e || box[0] == next_position_e }
+
+      [left_neighbor_index, right_neighbor_index].compact.uniq.each do |idx|
+        new_state = move_object2(state[:boxes][idx], deep_dup(state), direction)
+        return nil if new_state.nil? || state[:boxes][idx] == new_state[:boxes][idx]
+
+        state = new_state
+      end
+
+      if (my_index = state[:boxes].index(object))
+        state[:boxes][my_index] = next_object
+      end
+
+      state
+    when '>'
+      next_position_s = shift_coords(object.first, direction)
+      next_position_e = shift_coords(object.last, direction)
+      next_object = [next_position_s, next_position_e]
+
+      return nil if state[:walls].include?(next_position_e)
+
+      neighbor_position_e = shift_coords(next_position_e, direction)
+      neighbor_object = [next_position_e, neighbor_position_e]
+
+      if (index = state[:boxes].index(neighbor_object))
+        return nil if state[:walls].include?(neighbor_position_e)
+
+        new_state = move_object2(neighbor_object, deep_dup(state), direction)
+        return nil if new_state.nil? || state[:boxes][index] == new_state[:boxes][index]
+
+        state = new_state
+      end
+
+      if (my_index = state[:boxes].index(object))
+        state[:boxes][my_index] = next_object
+      end
+
+      state
+
     end
-
-    next_position
   end
 
   def self.expanded_grid
     expanded_grid = []
 
     GRID.each_with_index do |row, i|
-      next if row.include?('<') || row.empty?
+      next if row.include?('<') || row.include?('>') || row.nil?
 
       expanded_grid[i] = []
 
@@ -165,5 +182,20 @@ module Day15
     end
 
     expanded_grid
+  end
+
+  def self.shift_coords(position, direction)
+    position.zip(DIRECTIONS[direction]).map(&:sum)
+  end
+
+  def self.deep_dup(obj)
+    case obj
+    when Array
+      obj.map { |e| deep_dup(e) }
+    when Hash
+      obj.transform_values { |v| deep_dup(v) }
+    else
+      obj.dup rescue obj # `dup` immutable objects safely
+    end
   end
 end

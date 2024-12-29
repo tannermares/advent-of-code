@@ -12,7 +12,6 @@ class TestDay15 < Test::Unit::TestCase
   end
 
   def test_part2
-    omit
-    Day15::SAMPLE ? assert_equal(nil, Day15.part2) : assert_equal(nil, Day15.part2)
+    Day15::SAMPLE ? assert_equal(9_021, Day15.part2) : assert_equal(1_467_145, Day15.part2)
   end
 end
