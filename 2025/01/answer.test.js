@@ -5,19 +5,11 @@ const assert = require('assert')
 const { part1, part2, SAMPLE } = require('./answer.js')
 
 describe('day01', () => {
-  test('part1', (t) => {
-    t.skip()
-    return
-    SAMPLE
-      ? assert.strictEqual(part1(), null)
-      : assert.strictEqual(part1(), null)
+  test('part1', () => {
+    SAMPLE ? assert.strictEqual(part1(), 3) : assert.strictEqual(part1(), 982)
   })
 
   test('part2', (t) => {
-    t.skip()
-    return
-    SAMPLE
-      ? assert.strictEqual(part2(), null)
-      : assert.strictEqual(part2(), null)
+    SAMPLE ? assert.strictEqual(part2(), 6) : assert.strictEqual(part2(), 6106)
   })
 })
