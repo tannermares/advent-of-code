@@ -9,36 +9,35 @@ module Day03
 
   def self.part1
     INPUT.sum do |row|
-      first = nil
-      second = nil
-      chars = row.strip.chars
-
-      9.downto(0) do |n|
-        first_index = chars.index(n.to_s)
-
-        next unless first_index && first_index < row.length - 2
-
-        first = n
-        break
-      end
-
-      row_half = chars.slice((chars.index(first.to_s) + 1)..).reverse
-
-      9.downto(0) do |m|
-        second_index = row_half.index(m.to_s)
-
-        next unless second_index
-
-        second = m
-        break
-      end
-
-      "#{first}#{second}".to_i
+      largest_number(row.strip.chars, 1)
     end
   end
 
   def self.part2
     INPUT.sum do |row|
+      largest_number(row.strip.chars, 11)
+    end
+  end
+
+  def self.largest_number(chars, digit)
+    digits = []
+
+    until digit.negative?
+      index = chars.index(digits.last.to_s)
+      chars = chars.slice((index + 1)..) if index
+      digits << first_biggest(chars, digit)
+      digit -= 1
+    end
+
+    digits.join.to_i
+  end
+
+  def self.first_biggest(array, digit)
+    9.downto(1) do |n|
+      index = array.index(n.to_s)
+      next unless index && index < array.length - digit
+
+      return n
     end
   end
 end
