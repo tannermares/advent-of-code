@@ -24,6 +24,10 @@ module Day04
           next_position = [j, i].zip(direction).map(&:sum)
           next unless valid_position?(next_position)
 
+          puts '-' * 50
+          puts next_position
+          puts '-' * 50
+
           next_cell = GRID.dig(*next_position.reverse)
           next unless next_cell == '@'
 
