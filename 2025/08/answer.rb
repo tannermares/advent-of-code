@@ -68,7 +68,7 @@ module Day08
     last_pair = nil
 
     sorted_distances.each do |(pair, _distance)|
-      break if circuits.any? { |c| c.length == 20 }
+      break if circuits.any? { |c| c.uniq.length == 20 }
 
       to_delete = nil
       last_pair = pair
