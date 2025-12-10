@@ -21,14 +21,17 @@ module Day09
   def self.part2
     red_tiles = INPUT.map { |row| row.strip.split(',').map(&:to_i) }
     pairs = []
-    red_tiles.repeated_combination(2) { |combination| pairs.push(combination) unless combination.uniq.length == 1 }
+
+    red_tiles.repeated_combination(2) do |combination|
+      if combination.uniq.length != 1 && combination[0][0] != combination[1][0] && combination[0][1] != combination[1][1]
+        pairs.push(combination)
+      end
+    end
+
     areas = {}
     pairs.each { |pair| areas[pair] = area(*pair) }
-    sorted_areas = areas.sort_by { |_, v| v }
-    width = red_tiles.max_by(&:first)[0] + 1
-    height = red_tiles.max_by(&:last)[0] + 1
-    grid = Array.new(height) { Array.new(width, '.') }
-    valid_cells = []
+    sorted_areas = areas.sort_by { |_, v| -v }
+    grid = {}
 
     red_tiles.push(red_tiles[0]).each_with_index do |tile, index|
       next if index.zero?
@@ -38,54 +41,42 @@ module Day09
       if tile[0] == previous_tile[0]
         if previous_tile[1] > tile[1]
           previous_tile[1].downto(tile[1]) do |n|
-            grid[n][tile[0]] = 'X'
-            valid_cells.push([tile[0], n])
+            grid[[tile[0], n]] = 'X'
           end
         else
           previous_tile[1].upto(tile[1]) do |n|
-            grid[n][tile[0]] = 'X'
-            valid_cells.push([tile[0], n])
+            grid[[tile[0], n]] = 'X'
           end
+        end
+      elsif previous_tile[0] > tile[0]
+        previous_tile[0].downto(tile[0]) do |n|
+          grid[[n, tile[1]]] = 'X'
         end
       else
-        if previous_tile[0] > tile[0]
-          previous_tile[0].downto(tile[0]) do |n|
-            grid[tile[1]][n] = 'X'
-            valid_cells.push([n, tile[1]])
-          end
-        else
-          previous_tile[0].upto(tile[0]) do |n|
-            grid[tile[1]][n] = 'X'
-            valid_cells.push([n, tile[1]])
-          end
+        previous_tile[0].upto(tile[0]) do |n|
+          grid[[n, tile[1]]] = 'X'
         end
       end
 
-      grid[tile[1]][tile[0]] = '#'
-      grid[previous_tile[1]][previous_tile[0]] = '#'
-    end
-
-    grid.each_with_index do |row, i|
-      row.each_with_index do |cell, j|
-        next unless cell == '.'
-
-        previous_cell = grid[i][j - 1]
-        next unless valid_position?([i, j - 1], height, width)
-
-        if %w[# X].include?(previous_cell)
-          grid[i][j] = 'X'
-          valid_cells.push([j, i])
-        end
-
-      end
+      grid[[tile[0], tile[1]]] = '#'
+      grid[[previous_tile[0], previous_tile[1]]] = '#'
     end
 
     in_perimeter = nil
+    rows = {}
 
     until in_perimeter
       sorted_areas.each do |pair, area|
-        points = area_points(*pair)
-        in_perimeter = area if points.all? { |p| valid_cells.include?(p) }
+        other_corners = other_corners(*pair)
+        inclusive = other_corners.all? do |p|
+          rows[p[1]] ||= grid.select { |k, _| k[1] == p[1] }.keys.map(&:first)
+          p[0].between?(rows[p[1]].min, rows[p[1]].max)
+        end
+
+        next unless inclusive
+
+        in_perimeter = area
+        break
       end
     end
 
@@ -99,40 +90,10 @@ module Day09
     (length + 1) * (width + 1)
   end
 
-  def self.valid_position?(position, height, width)
-    position[0].between?(0, width - 1) && position[1].between?(0, height - 1)
-  end
+  def self.other_corners(point_one, point_two)
+    corner_one = [point_one[0], point_two[1]]
+    corner_two = [point_two[0], point_one[1]]
 
-  # [9,5], [2,3]
-  def self.area_points(point_one, point_two)
-    points = [point_one, point_two]
-
-    if point_one[0] > point_two[0]
-      point_one[0].downto(point_two[0]) do |n|
-        if point_one[1] > point_two[1]
-          point_one[1].downto(point_two[1]) do |m|
-            points.push([n, m])
-          end
-        else
-          point_one[1].upto(point_two[1]) do |m|
-            points.push([n, m])
-          end
-        end
-      end
-    else
-      point_one[0].upto(point_two[0]) do |n|
-        if point_one[1] > point_two[1]
-          point_one[1].downto(point_two[1]) do |m|
-            points.push([n, m])
-          end
-        else
-          point_one[1].upto(point_two[1]) do |m|
-            points.push([n, m])
-          end
-        end
-      end
-    end
-
-    points.uniq
+    [corner_one, corner_two]
   end
 end

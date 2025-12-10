@@ -11,6 +11,8 @@ class TestDay09 < Test::Unit::TestCase
     Day09::SAMPLE ? assert_equal(50, Day09.part1) : assert_equal(4_733_727_792, Day09.part1)
   end
 
+  # 4_586_842_110 too high
+  # 126_194_866 too low
   def test_part2
     Day09::SAMPLE ? assert_equal(24, Day09.part2) : assert_equal(nil, Day09.part2)
   end
