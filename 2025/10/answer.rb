@@ -16,7 +16,6 @@ module Day10
         new_array = Array.new(machine.length)
         new_array.map.with_index { |_, i| clean_buttons.include?(i) ? 1 : 0 }
       end
-      # joltages = joltages.gsub(/[{}]/, '').split(',').map(&:to_i)
       pair = nil
       combo_index = 1
 
@@ -44,15 +43,18 @@ module Day10
         new_array.map.with_index { |_, i| clean_buttons.include?(i) ? 1 : 0 }
       end
       pair = nil
-      combo_index = 2
+      combo_index = joltages.max
+      max_index = joltages.index(joltages.max)
 
       until pair
         buttons.repeated_permutation(combo_index) do |combo|
+          next unless combo.sum { |n| n[max_index] } == joltages.max
           next unless combo.transpose.map { |x| x.reduce(:+) } == joltages
 
           pair = combo
           break
         end
+
         combo_index += 1
       end
 
