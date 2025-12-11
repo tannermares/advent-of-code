@@ -67,10 +67,12 @@ module Day09
 
     until in_perimeter
       sorted_areas.each do |pair, area|
-        other_corners = other_corners(*pair)
-        inclusive = other_corners.all? do |p|
-          rows[p[1]] ||= grid.select { |k, _| k[1] == p[1] }.keys.map(&:first)
-          p[0].between?(rows[p[1]].min, rows[p[1]].max)
+        corner_pairs = corner_pairs(*pair)
+        inclusive = corner_pairs.all? do |(p, c)|
+          rows[c[1]] ||= grid.select { |k, _| k[1] == c[1] }.keys.map(&:first).sort
+          # row_continuous = rows[c[1]].each_cons(2).all? { |x, y| x + 1 == y }
+          c[0].between?(rows[c[1]].min, rows[c[1]].max) &&
+            p[1].between?(rows[c[1]].min, rows[c[1]].max)
         end
 
         next unless inclusive
@@ -90,10 +92,10 @@ module Day09
     (length + 1) * (width + 1)
   end
 
-  def self.other_corners(point_one, point_two)
-    corner_one = [point_one[0], point_two[1]]
-    corner_two = [point_two[0], point_one[1]]
+  def self.corner_pairs(point_one, point_two)
+    corner_one = [point_two[0], point_one[1]]
+    corner_two = [point_one[0], point_two[1]]
 
-    [corner_one, corner_two]
+    [[point_one, corner_one], [point_two, corner_two]]
   end
 end
